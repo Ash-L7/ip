@@ -8,16 +8,26 @@ public class Shadow {
                 "- What can I do for you?");
 
         String userInput = scanner.nextLine();
-        Task taskList = new Task();
+        String[] action = userInput.split(" ");
+        TaskList taskList = new TaskList();
+        Integer index = 0;
 
-        while (!userInput.equalsIgnoreCase("bye")) {
-            if (userInput.equalsIgnoreCase("list")) {
+        while (!action[0].equalsIgnoreCase("bye")) {
+            if (action[0].equalsIgnoreCase("list")) {
                 taskList.outputTaskList();
+            } else if (action[0].equalsIgnoreCase("mark")) {
+                index = Integer.parseInt(action[1]);
+                taskList.getTask(index).markCompletion(true);
+            } else if (action[0].equalsIgnoreCase("unmark")) {
+                index = Integer.parseInt(action[1]);
+                taskList.getTask(index).markCompletion(false);
             } else {
-                taskList.addTask(userInput);
+                Task task = new Task(userInput);
+                taskList.addTask(task);
             }
 
             userInput = scanner.nextLine();
+            action = userInput.split(" ");
         }
 
         System.out.println("- Bye. Hope to see you again soon!\n");
