@@ -1,8 +1,6 @@
 public class Task {
     private String name;
     private boolean isDone;
-    private String[] taskList;
-    private int n;
 
     public Task(String name) {
         this.name = name;

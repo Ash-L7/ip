@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.lang.StringBuilder;
 
 public class Shadow {
     public static void main(String[] args) {
@@ -21,9 +23,59 @@ public class Shadow {
             } else if (action[0].equalsIgnoreCase("unmark")) {
                 index = Integer.parseInt(action[1]);
                 taskList.getTask(index).setDone(false);
+            } else if (action[0].equalsIgnoreCase("deadline")) {
+                StringBuilder taskName = new StringBuilder();
+                StringBuilder taskDeadline = new StringBuilder();
+
+                for (int i = 1; i < action.length; i++) {
+                    if (action[i].equals("/by")) {
+                        for (i = i + 1; i < action.length; i++) {
+                            taskDeadline.append(" ");
+                            taskDeadline.append(action[i]);
+                        }
+                        break;
+                    } else {
+                        taskName.append(action[i]);
+                        taskName.append(" ");
+                    }
+                }
+
+                Deadline deadline = new Deadline(taskName.toString(), taskDeadline.toString());
+                taskList.addTask(deadline);
+            } else if (action[0].equalsIgnoreCase("event")) {
+                StringBuilder taskName = new StringBuilder();
+                StringBuilder startTime = new StringBuilder();
+                StringBuilder endTime = new StringBuilder();
+                boolean isTaskName = true;
+
+                for (int i = 1; i < action.length; i++) {
+                    if (action[i].equals("/from")) {
+                        for (i = i + 1; i < action.length; i++) {
+                            if (action[i].equals("/to")) {
+                                i = i - 2;
+                                break;
+                            }
+                            startTime.append(" ");
+                            startTime.append(action[i]);
+                        }
+                    } else if (action[i].equals("/to")) {
+                        for (i = i + 1; i < action.length; i++) {
+                            endTime.append(" ");
+                            endTime.append(action[i]);
+                        }
+                    } else {
+                        if (isTaskName) {
+                            taskName.append(action[i]);
+                            taskName.append(" ");
+                        }
+                    }
+                }
+
+                Event event = new Event(taskName.toString(), startTime.toString(), endTime.toString());
+                taskList.addTask(event);
             } else {
-                Task task = new Task(userInput);
-                taskList.addTask(task);
+                ToDo toDo = new ToDo(userInput);
+                taskList.addTask(toDo);
             }
 
             userInput = scanner.nextLine();
