@@ -1,29 +1,40 @@
 public class Task {
     private String name;
-    private String completion;
+    private boolean isDone;
     private String[] taskList;
     private int n;
 
     public Task(String name) {
         this.name = name;
-        this.completion = "[ ] ";
+        this.isDone = false;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public String getCompletion() {
-        return this.completion;
+    public String getIsDone() {
+        if (this.isDone) {
+            return "X";
+        }
+
+        return " ";
     }
 
-    public void markCompletion(boolean status) {
+    public void setDone(boolean status) {
         if (status) {
-            this.completion = "[X] ";
-            System.out.println("Nice! I've marked this task as done: " + this.completion + this.name);
+            this.isDone = true;
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println(this.toString());
         } else {
-            this.completion = "[ ] ";
-            System.out.println("OK, I've marked this task as not done yet: " + this.completion + this.name);
+            this.isDone = false;
+            System.out.println("OK, I've marked this task as not done yet: ");
+            System.out.println(this.toString());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "[" + getIsDone() + "] " + this.name;
     }
 }

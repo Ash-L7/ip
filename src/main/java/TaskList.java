@@ -14,12 +14,12 @@ public class TaskList {
     }
 
     public void outputTaskList() {
-        for (int i = 0; i < n; i++) {
-            System.out.println(i + ". " + this.taskList[i].getCompletion() + this.taskList[i].getName());
+        for (int i = 1; i <= n; i++) {
+            System.out.println(i + ". " + taskList[i - 1].toString());
         }
     }
 
-    public Task getTask(int n) {
-        return this.taskList[n];
+    public Task getTask(int i) {
+        return this.taskList[i - 1];
     }
 }

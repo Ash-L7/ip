@@ -17,10 +17,10 @@ public class Shadow {
                 taskList.outputTaskList();
             } else if (action[0].equalsIgnoreCase("mark")) {
                 index = Integer.parseInt(action[1]);
-                taskList.getTask(index).markCompletion(true);
+                taskList.getTask(index).setDone(true);
             } else if (action[0].equalsIgnoreCase("unmark")) {
                 index = Integer.parseInt(action[1]);
-                taskList.getTask(index).markCompletion(false);
+                taskList.getTask(index).setDone(false);
             } else {
                 Task task = new Task(userInput);
                 taskList.addTask(task);
