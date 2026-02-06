@@ -25,10 +25,10 @@ public class TaskList {
     public void removeTask(int index) {
         String taskRemoved = taskLists.get(index - 1).toString();
         taskLists.remove(index - 1);
+        numberOfTasks--;
 
-        System.out.println("Noted. I've removed this task: \n" +
-                taskRemoved + "\nNow you have " +
-                numberOfTasks + " tasks in the list.");
+        System.out.println("Noted. I've removed this task:\n" + taskRemoved + "\nNow you have " + numberOfTasks +
+                " tasks in the list.");
     }
 
     public Task getTask(int i) {

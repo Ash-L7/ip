@@ -43,7 +43,7 @@ public class Shadow {
                     }
                 }
 
-                Deadline deadline = new Deadline(taskName.toString(), taskDeadline.toString());
+                Deadline deadline = new Deadline(taskName.toString().trim(), taskDeadline.toString().trim());
                 taskList.addTask(deadline);
             } else if (action[0].equalsIgnoreCase("event")) {
                 StringBuilder taskName = new StringBuilder();
@@ -53,6 +53,8 @@ public class Shadow {
 
                 for (int i = 1; i < action.length; i++) {
                     if (action[i].equals("/from")) {
+                        isTaskName = false;
+
                         for (i = i + 1; i < action.length; i++) {
                             if (action[i].equals("/to")) {
                                 i = i - 2;
@@ -74,7 +76,8 @@ public class Shadow {
                     }
                 }
 
-                Event event = new Event(taskName.toString(), startTime.toString(), endTime.toString());
+                Event event = new Event(taskName.toString().trim(), startTime.toString().trim(),
+                        endTime.toString().trim());
                 taskList.addTask(event);
             } else {
                 StringBuilder taskName = new StringBuilder();
@@ -84,7 +87,7 @@ public class Shadow {
                     taskName.append(" ");
                 }
 
-                ToDo toDo = new ToDo(taskName.toString());
+                ToDo toDo = new ToDo(taskName.toString().trim());
                 taskList.addTask(toDo);
             }
 
