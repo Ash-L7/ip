@@ -23,6 +23,9 @@ public class Shadow {
             } else if (action[0].equalsIgnoreCase("unmark")) {
                 index = Integer.parseInt(action[1]);
                 taskList.getTask(index).setDone(false);
+            } else if (action[0].equalsIgnoreCase("delete")) {
+                index = Integer.parseInt(action[1]);
+                taskList.removeTask(index);
             } else if (action[0].equalsIgnoreCase("deadline")) {
                 StringBuilder taskName = new StringBuilder();
                 StringBuilder taskDeadline = new StringBuilder();
@@ -74,7 +77,14 @@ public class Shadow {
                 Event event = new Event(taskName.toString(), startTime.toString(), endTime.toString());
                 taskList.addTask(event);
             } else {
-                ToDo toDo = new ToDo(userInput);
+                StringBuilder taskName = new StringBuilder();
+
+                for (int i = 1; i < action.length; i++) {
+                    taskName.append(action[i]);
+                    taskName.append(" ");
+                }
+
+                ToDo toDo = new ToDo(taskName.toString());
                 taskList.addTask(toDo);
             }
 
