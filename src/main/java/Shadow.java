@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.lang.StringBuilder;
 
 public class Shadow {
+    /** A collection of all valid commands for the chatbot Shadow. */
     private static final String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark",
             "bye"};
 
@@ -126,6 +127,14 @@ public class Shadow {
         System.out.println("- Bye. Hope to see you again soon!\n");
     }
 
+    /**
+     * Checks whether the command entered by user
+     * is among the list of valid commands.
+     * Informs the user of invalid command.
+     *
+     * @param command Action the user would like Shadow to perform.
+     * @throws InvalidCommandException
+     */
     public static void validateCommand(String command) throws InvalidCommandException {
         for (String cmd : validCommands) {
             if (command.equalsIgnoreCase(cmd)) {
@@ -136,6 +145,13 @@ public class Shadow {
         throw new InvalidCommandException("- Well that's strange. You sure I should be able to do that?");
     }
 
+    /**
+     * Checks whether a description for the task is given
+     * by checking the length of the input.
+     *
+     * @param userInput String array of the user's input.
+     * @throws InvalidTaskDescriptionException
+     */
     public static void validateTaskDescription(String[] userInput) throws InvalidTaskDescriptionException {
         if (userInput.length < 2) {
             throw new InvalidTaskDescriptionException("- Can't be doing nothing, could you?");
