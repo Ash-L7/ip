@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
 /**
- *
+ * The TaskList class maintains a collection of Task objects using an ArrayList.
  */
 public class TaskList {
     /** List recording all the task added by user */
-    private ArrayList<Task> taskLists;
+    private final ArrayList<Task> taskLists;
     /** Number of tasks in the list */
     private int numberOfTasks;
 
+    /**
+     * The constructor for a TaskList. It initializes the task list.
+     */
     public TaskList() {
-        this.taskLists = new ArrayList<Task>();
+        this.taskLists = new ArrayList<>();
         this.numberOfTasks = 0;
     }
 
@@ -18,7 +21,7 @@ public class TaskList {
      * Adds task to the list of tasks.
      * Prints out the task description of the task added and the total number of task currently in the list.
      *
-     * @param task
+     * @param task Task object to be added to the list.
      */
     public void addTask(Task task) {
         this.taskLists.add(task);
