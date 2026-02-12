@@ -1,7 +1,21 @@
+/**
+ * Event is a subclass of Task with a [E] marker.
+ * It represents a task that starts and ends at a specific time.
+ */
 public class Event extends Task {
+    /** The start time of the task */
     private String startTime;
+    /** The end time of the task */
     private String endTime;
 
+    /**
+     * The constructor for Event Task object.
+     * Takes in the description, starting time and ending time of the task.
+     *
+     * @param name Description of the task being created.
+     * @param startTime
+     * @param endTime
+     */
     public Event(String name, String startTime, String endTime) {
         super(name);
         this.startTime = startTime;
