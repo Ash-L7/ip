@@ -4,9 +4,10 @@
  */
 public class Event extends Task {
     /** The start time of the task */
-    private String startTime;
+    private final String startTime;
     /** The end time of the task */
-    private String endTime;
+    private final String endTime;
+    private String name;
 
     /**
      * The constructor for Event Task object.
@@ -20,6 +21,10 @@ public class Event extends Task {
         super(name);
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String toFileFormat() {
+        return "T," + getIsDone() + "," + this.name + "," + this.startTime + "," + this.endTime;
     }
 
     @Override

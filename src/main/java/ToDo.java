@@ -5,6 +5,8 @@
  * and only records the description of the task
  */
 public class ToDo extends Task {
+    private String name;
+
     /**
      * The constructor for ToDo Task object.
      * Initializes isDone and marks task as incomplete by default.
@@ -13,6 +15,10 @@ public class ToDo extends Task {
      */
     public ToDo(String name) {
         super(name);
+    }
+
+    public String toFileFormat() {
+        return "T," + getIsDone() + "," + this.name;
     }
 
     @Override

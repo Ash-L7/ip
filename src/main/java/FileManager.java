@@ -50,12 +50,13 @@ public class FileManager {
         try (Scanner s = new Scanner(dataFile)) {
             while (s.hasNext()) {
                 String line = s.nextLine();
-                String[] parts = line.split("\\|");
+                String[] parts = line.split(",");
                 String type = parts[0].trim();
                 boolean isDone = parts[1].trim().equals("1");
                 String desc = parts[2].trim();
 
                 Task task = null;
+
                 switch (type) {
                     case "T":
                         task = new ToDo(desc);
@@ -67,13 +68,14 @@ public class FileManager {
                         task = new Event(desc, parts[3].trim(), parts[4].trim());
                         break;
                 }
+
                 if (task != null) {
                     task.setDone(isDone);
                     taskList.addTask(task);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            System.out.println("- File not found.");
         }
     }
 
@@ -83,12 +85,14 @@ public class FileManager {
      * @param taskList The task list that whose items will be stored in the local file.
      */
     public void saveFile(TaskList taskList) {
-//        try (FileWriter fw = new FileWriter(FILE_PATH)) {
-//            for (int i = 1; i <= taskList.getSize(); i++) {
-//                fw.write(taskList.getTask(i).toFileFormat() + System.lineSeparator());
-//            }
-//        } catch (IOException e) {
-//            System.out.println("Save failed: " + e.getMessage());
-//        }
+        try (FileWriter fw = new FileWriter(FILE_PATH)) {
+            for (int i = 1; i <= taskList.getSize(); i++) {
+                fw.write(taskList.getTask(i).toFileFormat() + System.lineSeparator());
+            }
+
+            System.out.println("- Progress saved.");
+        } catch (IOException e) {
+            System.out.println("- Save failed: " + e.getMessage());
+        }
     }
 }

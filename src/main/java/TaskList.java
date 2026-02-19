@@ -17,6 +17,10 @@ public class TaskList {
         this.numberOfTasks = 0;
     }
 
+    public int getSize() {
+        return this.numberOfTasks;
+    }
+
     /**
      * Adds task to the list of tasks.
      * Prints out the task description of the task added and the total number of task currently in the list.
@@ -25,8 +29,8 @@ public class TaskList {
      */
     public void addTask(Task task) {
         this.taskLists.add(task);
-        System.out.println("added: " + task.toString());
-        System.out.println("Now you have " + (this.numberOfTasks + 1) + " tasks in the list.");
+        System.out.println("- added: " + task.toString());
+        System.out.println("- Now you have " + (this.numberOfTasks + 1) + " tasks in the list.");
         numberOfTasks++;
     }
 
@@ -49,7 +53,7 @@ public class TaskList {
         taskLists.remove(index - 1);
         numberOfTasks--;
 
-        System.out.println("Noted. I've removed this task:\n" + taskRemoved + "\nNow you have " + numberOfTasks +
+        System.out.println("- Noted. I've removed this task:\n" + taskRemoved + "\nNow you have " + numberOfTasks +
                 " tasks in the list.");
     }
 

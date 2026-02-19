@@ -5,6 +5,7 @@
 public class Deadline extends Task{
     /** Due day of the task */
     private final String deadline;
+    private String name;
 
     /**
      * The constructor for Deadline Task object.
@@ -16,6 +17,10 @@ public class Deadline extends Task{
     public Deadline(String name, String deadline) {
         super(name);
         this.deadline = deadline;
+    }
+
+    public String toFileFormat() {
+        return "D," + getIsDone() + "," + this.name + "," + this.deadline;
     }
 
     @Override

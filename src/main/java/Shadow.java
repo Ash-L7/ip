@@ -127,6 +127,8 @@ public class Shadow {
             }
         }
 
+        dataFile.saveFile(taskList);
+
         System.out.println("- Bye. Hope to see you again soon!\n");
     }
 
