@@ -8,13 +8,16 @@ public class Shadow {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        FileManager dataFile = new FileManager();
+        TaskList taskList = new TaskList();
 
         System.out.println("- Hello! I'm Shadow\n" +
                 "- What can I do for you?");
 
+        dataFile.hasFile(taskList);
+
         String userInput = scanner.nextLine();
         String[] action = userInput.split(" ");
-        TaskList taskList = new TaskList();
         int index;
 
         while (!action[0].equalsIgnoreCase("bye")) {
