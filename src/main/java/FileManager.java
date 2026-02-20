@@ -62,16 +62,20 @@ public class FileManager {
                         task = new ToDo(desc);
                         break;
                     case "D":
-                        task = new Deadline(desc, parts[3].trim());
+                        TimeHandler timeHandler = new TimeHandler(parts[3].trim(), parts[4].trim());
+                        task = new Deadline(desc, timeHandler.taskDate(), timeHandler.taskTime());
                         break;
                     case "E":
-                        task = new Event(desc, parts[3].trim(), parts[4].trim());
+                        TimeHandler startTime = new TimeHandler(parts[3].trim(), parts[4].trim());
+                        TimeHandler endTime = new TimeHandler(parts[5].trim(), parts[6].trim());
+                        task = new Event(desc, startTime.taskDate(), startTime.taskTime(),
+                                endTime.taskDate(), endTime.taskTime());
                         break;
                 }
 
                 if (task != null) {
-                    task.setDone(isDone);
                     taskList.addTask(task);
+                    task.setDone(isDone);
                 }
             }
         } catch (FileNotFoundException e) {
