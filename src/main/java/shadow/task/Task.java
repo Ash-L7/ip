@@ -4,7 +4,7 @@ package shadow.task;
  * The representation of a task,
  * Records the description and completion status of the task.
  */
-public class Task {
+public abstract class Task {
     /** The description of the task. */
     final String name;
     /** Keeps track of whether task has been completed. */
@@ -53,9 +53,7 @@ public class Task {
         }
     }
 
-    public String toFileFormat() {
-        return "";
-    }
+    public abstract String toFileFormat();
 
     @Override
     public String toString() {

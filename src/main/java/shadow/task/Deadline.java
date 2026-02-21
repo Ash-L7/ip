@@ -26,6 +26,7 @@ public class Deadline extends Task{
         this.deadline = new TimeHandler(deadlineDate, deadlineTime);
     }
 
+    @Override
     public String toFileFormat() {
         return "D," + getIsDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
     }

@@ -8,8 +8,8 @@ public class Ui {
     }
 
     public void greetings() {
-        System.out.println("- Hello! I'm shadow.Shadow\n" +
-                "- What can I do for you?");
+        System.out.println("- Hello! I'm shadow.Shadow\n"
+                + "- What can I do for you?");
     }
 
     public void showTaskAdded(Task task, int index) {
@@ -18,7 +18,7 @@ public class Ui {
     }
 
     public void onExit() {
-        System.out.println("- Bye. Hope to see you again soon!\n");
+        System.out.println("- Bye. Hope to see you again soon!");
     }
 
     public void showError(String errorMessage) {

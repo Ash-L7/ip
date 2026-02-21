@@ -28,6 +28,7 @@ public class Event extends Task {
         this.endTime = new TimeHandler(endDate, endTime);
     }
 
+    @Override
     public String toFileFormat() {
         return "T," + getIsDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
                 + "," + this.endTime.taskDate() + "," + this.endTime.taskTime();
