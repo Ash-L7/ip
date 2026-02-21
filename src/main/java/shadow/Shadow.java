@@ -62,14 +62,11 @@ public class Shadow {
                 if (action[0].equalsIgnoreCase("deadline")) {
                     validateTaskDescription(action);
                     StringBuilder taskName = new StringBuilder();
-                    StringBuilder taskDeadline = new StringBuilder();
+                    int timeIndex = 0;
 
                     for (int i = 1; i < action.length; i++) {
                         if (action[i].equals("/by")) {
-                            for (i = i + 1; i < action.length; i++) {
-                                taskDeadline.append(" ");
-                                taskDeadline.append(action[i]);
-                            }
+                            timeIndex = i + 1;
                             break;
                         } else {
                             taskName.append(action[i]);
@@ -77,33 +74,30 @@ public class Shadow {
                         }
                     }
 
-                    Deadline deadline = new Deadline(taskName.toString().trim(), taskDeadline.toString().trim());
+                    TimeHandler timeHandler = new TimeHandler(action[timeIndex], action[timeIndex + 1]);
+
+                    Deadline deadline = new Deadline(taskName.toString().trim(), timeHandler.taskDate(),
+                            timeHandler.taskTime());
                     taskList.addTask(deadline);
                 }
 
                 if (action[0].equalsIgnoreCase("event")) {
                     validateTaskDescription(action);
                     StringBuilder taskName = new StringBuilder();
-                    StringBuilder startTime = new StringBuilder();
-                    StringBuilder endTime = new StringBuilder();
                     boolean isTaskName = true;
+                    int startIndex = 0;
+                    int endIndex = 0;
 
                     for (int i = 1; i < action.length; i++) {
                         if (action[i].equals("/from")) {
                             isTaskName = false;
+                            startIndex = i + 1;
 
                             for (i = i + 1; i < action.length; i++) {
                                 if (action[i].equals("/to")) {
-                                    i = i - 2;
+                                    endIndex = i + 1;
                                     break;
                                 }
-                                startTime.append(" ");
-                                startTime.append(action[i]);
-                            }
-                        } else if (action[i].equals("/to")) {
-                            for (i = i + 1; i < action.length; i++) {
-                                endTime.append(" ");
-                                endTime.append(action[i]);
                             }
                         } else {
                             if (isTaskName) {
@@ -113,8 +107,11 @@ public class Shadow {
                         }
                     }
 
-                    Event event = new Event(taskName.toString().trim(), startTime.toString().trim(),
-                            endTime.toString().trim());
+                    TimeHandler startTine = new TimeHandler(action[startIndex], action[startIndex + 1]);
+                    TimeHandler endTime = new TimeHandler(action[endIndex], action[endIndex + 1]);
+
+                    Event event = new Event(taskName.toString().trim(), startTine.taskDate(), startTine.taskTime(),
+                            endTime.taskDate(), endTime.taskTime());
                     taskList.addTask(event);
                 }
 

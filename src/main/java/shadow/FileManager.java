@@ -1,8 +1,8 @@
 package shadow;
 
+import shadow.task.Task;
 import shadow.task.Deadline;
 import shadow.task.Event;
-import shadow.task.Task;
 import shadow.task.ToDo;
 
 import java.io.File;
@@ -69,10 +69,14 @@ public class FileManager {
                         task = new ToDo(desc);
                         break;
                     case "D":
-                        task = new Deadline(desc, parts[3].trim());
+                        TimeHandler timeHandler = new TimeHandler(parts[3].trim(), parts[4].trim());
+                        task = new Deadline(desc, timeHandler.taskDate(), timeHandler.taskTime());
                         break;
                     case "E":
-                        task = new Event(desc, parts[3].trim(), parts[4].trim());
+                        TimeHandler startTime = new TimeHandler(parts[3].trim(), parts[4].trim());
+                        TimeHandler endTime = new TimeHandler(parts[5].trim(), parts[6].trim());
+                        task = new Event(desc, startTime.taskDate(), startTime.taskTime(),
+                                endTime.taskDate(), endTime.taskTime());
                         break;
                 }
 
@@ -87,7 +91,7 @@ public class FileManager {
     }
 
     /**
-     * Takes a shadow.TaskList object and puts the items in the object into the local save file before exiting.
+     * Takes a TaskList object and puts the items in the object into the local save file before exiting.
      *
      * @param taskList The task list that whose items will be stored in the local file.
      */

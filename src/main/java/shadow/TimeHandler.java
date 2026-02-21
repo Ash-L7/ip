@@ -3,48 +3,62 @@ package shadow;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * A class to handle the date and time of the task
  * if it's in a different format
  */
 public class TimeHandler {
-    String date;
-    String time;
-    String dayText;
+    LocalDate date;
+    LocalTime time;
+    String dateText;
+    String timeText;
+
+    public TimeHandler(String date, String time) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        try {
+            this.date = LocalDate.parse(date, dateFormatter);
+        } catch (DateTimeParseException e) {
+            this.date = LocalDate.parse(date);
+        }
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
+        try {
+            this.time = LocalTime.parse(time, timeFormatter);
+        } catch (DateTimeParseException e) {
+            this.time = LocalTime.parse(time);
+        }
+
+        DateTimeFormatter dateTextFormatter = DateTimeFormatter.ofPattern("LLLL yyyy");
+        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mm a");
+
+        int day = this.date.getDayOfMonth();
+        this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
+        this.timeText = this.time.format(timeTextFormatter);
+    }
 
     public TimeHandler(LocalDate date, LocalTime time) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("L yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
-        int day = date.getDayOfMonth();
+        this.date = date;
+        this.time = time;
 
-        this.date = day + GetDaySuffix(day) + date.format(dateFormatter);
-        this.time = time.format(timeFormatter);
-        this.dayText = date.getDayOfWeek().name();
+        DateTimeFormatter dateTextFormatter = DateTimeFormatter.ofPattern("LLLL yyyy");
+        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mm a");
+
+        int day = this.date.getDayOfMonth();
+        this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
+        this.timeText = this.time.format(timeTextFormatter);
     }
 
-    public String convertToDate() {
-        return date;
+    public LocalDate taskDate() {
+        return this.date;
     }
 
-    public String convertToFullDate() {
-        return date + " " + time;
+    public LocalTime taskTime() {
+        return this.time;
     }
 
-    public String convertToTime() {
-        return time;
-    }
-
-    public String convertToDay() {
-        return dayText;
-    }
-
-    public String convertToDayTime() {
-        return dayText + " " + time;
-    }
-
-    private final String GetDaySuffix(int day)
-    {
+    private final String GetDaySuffix(int day) {
         switch (day) {
             case 1:
             case 21:
@@ -59,5 +73,10 @@ public class TimeHandler {
             default:
                 return "th";
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.dateText + " " + this.timeText;
     }
 }

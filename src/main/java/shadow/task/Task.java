@@ -11,7 +11,7 @@ public class Task {
     private boolean isDone;
 
     /**
-     * The constructor for shadow.task.Task object.
+     * The constructor for Task object.
      * Initializes isDone and marks task as incomplete by default.
      *
      * @param name Description of the task being created.
