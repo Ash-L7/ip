@@ -1,3 +1,5 @@
+package shadow.task;
+
 /**
  * The representation of a task,
  * Records the description and completion status of the task.
@@ -9,7 +11,7 @@ public class Task {
     private boolean isDone;
 
     /**
-     * The constructor for Task object.
+     * The constructor for shadow.task.Task object.
      * Initializes isDone and marks task as incomplete by default.
      *
      * @param name Description of the task being created.

@@ -1,7 +1,11 @@
+package shadow;
+
+import shadow.task.Task;
+
 import java.util.ArrayList;
 
 /**
- * The TaskList class maintains a collection of Task objects using an ArrayList.
+ * The shadow.TaskList class maintains a collection of shadow.task.Task objects using an ArrayList.
  */
 public class TaskList {
     /** List recording all the task added by user */
@@ -10,7 +14,7 @@ public class TaskList {
     private int numberOfTasks;
 
     /**
-     * The constructor for a TaskList. It initializes the task list.
+     * The constructor for a shadow.TaskList. It initializes the task list.
      */
     public TaskList() {
         this.taskLists = new ArrayList<>();
@@ -25,7 +29,7 @@ public class TaskList {
      * Adds task to the list of tasks.
      * Prints out the task description of the task added and the total number of task currently in the list.
      *
-     * @param task Task object to be added to the list.
+     * @param task shadow.task.Task object to be added to the list.
      */
     public void addTask(Task task) {
         this.taskLists.add(task);
@@ -61,7 +65,7 @@ public class TaskList {
      * Returns the task at the specified position in the list.
      *
      * @param index Position of the task in the list.
-     * @return Task object at the specified position in the list.
+     * @return shadow.task.Task object at the specified position in the list.
      */
     public Task getTask(int index) {
         return this.taskLists.get(index - 1);

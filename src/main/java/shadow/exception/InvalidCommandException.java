@@ -1,6 +1,8 @@
+package shadow.exception;
+
 public class InvalidCommandException extends ShadowException {
     /**
-     * Creates a new ShadowException with the specified error message
+     * Creates a new shadow.exception.ShadowException with the specified error message
      *
      * @param message The error message describing what went wrong
      */

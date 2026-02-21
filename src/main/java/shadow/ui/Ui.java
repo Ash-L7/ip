@@ -1,10 +1,12 @@
+package shadow.ui;
+
 public class Ui {
     public Ui() {
 
     }
 
     public void greetings() {
-        System.out.println("- Hello! I'm Shadow\n" +
+        System.out.println("- Hello! I'm shadow.Shadow\n" +
                 "- What can I do for you?");
     }
 

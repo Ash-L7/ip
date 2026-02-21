@@ -1,5 +1,7 @@
+package shadow.task;
+
 /**
- * Event is a subclass of Task with a [E] marker.
+ * shadow.task.Event is a subclass of shadow.task.Task with a [E] marker.
  * It represents a task that starts and ends at a specific time.
  */
 public class Event extends Task {
@@ -10,7 +12,7 @@ public class Event extends Task {
     private String name;
 
     /**
-     * The constructor for Event Task object.
+     * The constructor for shadow.task.Event shadow.task.Task object.
      * Takes in the description, starting time and ending time of the task.
      *
      * @param name Description of the task being created.

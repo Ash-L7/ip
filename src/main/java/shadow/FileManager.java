@@ -1,3 +1,10 @@
+package shadow;
+
+import shadow.task.Deadline;
+import shadow.task.Event;
+import shadow.task.Task;
+import shadow.task.ToDo;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -80,7 +87,7 @@ public class FileManager {
     }
 
     /**
-     * Takes a TaskList object and puts the items in the object into the local save file before exiting.
+     * Takes a shadow.TaskList object and puts the items in the object into the local save file before exiting.
      *
      * @param taskList The task list that whose items will be stored in the local file.
      */

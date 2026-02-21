@@ -1,5 +1,7 @@
+package shadow.task;
+
 /**
- * Deadline is a subclass of Task with a [D] marker.
+ * shadow.task.Deadline is a subclass of shadow.task.Task with a [D] marker.
  * It represents task with a due date.
  */
 public class Deadline extends Task{
@@ -8,7 +10,7 @@ public class Deadline extends Task{
     private String name;
 
     /**
-     * The constructor for Deadline Task object.
+     * The constructor for shadow.task.Deadline shadow.task.Task object.
      * Takes in the description and the due day of the task.
      *
      * @param name Description of the task being created.

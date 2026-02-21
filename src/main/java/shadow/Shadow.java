@@ -1,8 +1,17 @@
+package shadow;
+
+import shadow.exception.InvalidCommandException;
+import shadow.exception.InvalidTaskDescriptionException;
+import shadow.task.Deadline;
+import shadow.task.Event;
+import shadow.task.ToDo;
+import shadow.ui.Ui;
+
 import java.util.Scanner;
 import java.lang.StringBuilder;
 
 public class Shadow {
-    /** A collection of all valid commands for the chatbot Shadow. */
+    /** A collection of all valid commands for the chatbot shadow.Shadow. */
     private static final String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark",
             "bye"};
     private final FileManager dataFile;
@@ -145,7 +154,7 @@ public class Shadow {
      * is among the list of valid commands.
      * Informs the user of invalid command.
      *
-     * @param command Action the user would like Shadow to perform.
+     * @param command Action the user would like shadow.Shadow to perform.
      * @throws InvalidCommandException
      */
     public static void validateCommand(String command) throws InvalidCommandException {
