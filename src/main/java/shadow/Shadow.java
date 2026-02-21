@@ -1,5 +1,6 @@
 package shadow;
 
+import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.task.Deadline;
@@ -127,8 +128,7 @@ public class Shadow {
                         taskName.append(" ");
                     }
 
-                    ToDo toDo = new ToDo(taskName.toString().trim());
-                    taskList.addTask(toDo);
+                    new AddToDoCommand(taskName.toString().trim()).execute(taskList, ui);
                 }
 
             } catch (InvalidCommandException e) {

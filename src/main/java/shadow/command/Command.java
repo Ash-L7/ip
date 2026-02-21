@@ -1,4 +1,8 @@
 package shadow.command;
 
-public class Command {
+import shadow.ui.Ui;
+import shadow.TaskList;
+
+public abstract class Command {
+    public abstract void execute(TaskList taskList, Ui ui);
 }
