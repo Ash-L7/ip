@@ -1,6 +1,7 @@
 package shadow;
 
 import shadow.command.AddDeadlineCommand;
+import shadow.command.AddEventCommand;
 import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
@@ -110,9 +111,7 @@ public class Shadow {
                     TimeHandler startTine = new TimeHandler(action[startIndex], action[startIndex + 1]);
                     TimeHandler endTime = new TimeHandler(action[endIndex], action[endIndex + 1]);
 
-                    Event event = new Event(taskName.toString().trim(), startTine.taskDate(), startTine.taskTime(),
-                            endTime.taskDate(), endTime.taskTime());
-                    taskList.addTask(event);
+                    new AddEventCommand(taskName.toString().trim(), startTine, endTime).execute(taskList, ui);
                 }
 
                 if (action[0].equalsIgnoreCase("todo")) {
