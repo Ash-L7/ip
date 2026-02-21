@@ -1,28 +1,33 @@
 package shadow.task;
 
+import shadow.TimeHandler;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * shadow.task.Deadline is a subclass of shadow.task.Task with a [D] marker.
  * It represents task with a due date.
  */
 public class Deadline extends Task{
     /** Due day of the task */
-    private final String deadline;
-    private String name;
+    private final TimeHandler deadline;
 
     /**
-     * The constructor for shadow.task.Deadline shadow.task.Task object.
+     * The constructor for Deadline Task object.
      * Takes in the description and the due day of the task.
      *
      * @param name Description of the task being created.
-     * @param deadline A string of a day in a week representing the due date of the task.
+     * @param deadlineDate
+     * @param deadlineTime
      */
-    public Deadline(String name, String deadline) {
+    public Deadline(String name, LocalDate deadlineDate, LocalTime deadlineTime) {
         super(name);
-        this.deadline = deadline;
+        this.deadline = new TimeHandler(deadlineDate, deadlineTime);
     }
 
     public String toFileFormat() {
-        return "D," + getIsDone() + "," + this.name + "," + this.deadline;
+        return "D," + getIsDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
     }
 
     @Override

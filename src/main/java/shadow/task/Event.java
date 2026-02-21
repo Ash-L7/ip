@@ -1,36 +1,40 @@
 package shadow.task;
 
+import shadow.TimeHandler;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
- * shadow.task.Event is a subclass of shadow.task.Task with a [E] marker.
+ * Event is a subclass of Task with a [E] marker.
  * It represents a task that starts and ends at a specific time.
  */
 public class Event extends Task {
     /** The start time of the task */
-    private final String startTime;
+    private final TimeHandler startTime;
     /** The end time of the task */
-    private final String endTime;
-    private String name;
+    private final TimeHandler endTime;
 
     /**
-     * The constructor for shadow.task.Event shadow.task.Task object.
+     * The constructor for Event Task object.
      * Takes in the description, starting time and ending time of the task.
      *
      * @param name Description of the task being created.
      * @param startTime
      * @param endTime
      */
-    public Event(String name, String startTime, String endTime) {
+    public Event(String name, LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
         super(name);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = new TimeHandler(startDate, startTime);;
+        this.endTime = new TimeHandler(endDate, endTime);
     }
 
     public String toFileFormat() {
-        return "T," + getIsDone() + "," + this.name + "," + this.startTime + "," + this.endTime;
+        return "T," + getIsDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
+                + "," + this.endTime.taskDate() + "," + this.endTime.taskTime();
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.startTime + " to: " + this.endTime + ")";
+        return "[E]" + super.toString() + " (from: " + this.startTime.toString() + " to: " + this.endTime.toString() + ")";
     }
 }
