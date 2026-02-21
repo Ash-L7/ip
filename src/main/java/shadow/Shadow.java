@@ -5,11 +5,7 @@ import shadow.command.AddEventCommand;
 import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
-import shadow.task.Deadline;
-import shadow.task.Event;
-import shadow.task.ToDo;
 import shadow.ui.Ui;
-
 import java.util.Scanner;
 import java.lang.StringBuilder;
 
