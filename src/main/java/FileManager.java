@@ -70,8 +70,8 @@ public class FileManager {
                 }
 
                 if (task != null) {
-                    task.setDone(isDone);
                     taskList.addTask(task);
+                    task.setDone(isDone);
                 }
             }
         } catch (FileNotFoundException e) {

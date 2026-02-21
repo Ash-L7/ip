@@ -5,16 +5,21 @@ public class Shadow {
     /** A collection of all valid commands for the chatbot Shadow. */
     private static final String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark",
             "bye"};
+    private final FileManager dataFile;
+    private final TaskList taskList;
+    private final Ui ui;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        FileManager dataFile = new FileManager();
-        TaskList taskList = new TaskList();
-        Ui ui = new Ui();
+    public Shadow() {
+        dataFile = new FileManager();
+        taskList = new TaskList();
+        ui = new Ui();
 
         ui.greetings();
-
         dataFile.hasFile(taskList);
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
 
         String userInput = scanner.nextLine();
         String[] action = userInput.split(" ");
@@ -129,6 +134,10 @@ public class Shadow {
 
         dataFile.saveFile(taskList);
         ui.onExit();
+    }
+
+    public static void main(String[] args) {
+        new Shadow().run();
     }
 
     /**
