@@ -1,5 +1,8 @@
 package shadow;
 
+import shadow.command.AddDeadlineCommand;
+import shadow.command.AddEventCommand;
+import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.task.Deadline;
@@ -76,9 +79,7 @@ public class Shadow {
 
                     TimeHandler timeHandler = new TimeHandler(action[timeIndex], action[timeIndex + 1]);
 
-                    Deadline deadline = new Deadline(taskName.toString().trim(), timeHandler.taskDate(),
-                            timeHandler.taskTime());
-                    taskList.addTask(deadline);
+                    new AddDeadlineCommand(taskName.toString().trim(), timeHandler).execute(taskList, ui);
                 }
 
                 if (action[0].equalsIgnoreCase("event")) {
@@ -110,9 +111,7 @@ public class Shadow {
                     TimeHandler startTine = new TimeHandler(action[startIndex], action[startIndex + 1]);
                     TimeHandler endTime = new TimeHandler(action[endIndex], action[endIndex + 1]);
 
-                    Event event = new Event(taskName.toString().trim(), startTine.taskDate(), startTine.taskTime(),
-                            endTime.taskDate(), endTime.taskTime());
-                    taskList.addTask(event);
+                    new AddEventCommand(taskName.toString().trim(), startTine, endTime).execute(taskList, ui);
                 }
 
                 if (action[0].equalsIgnoreCase("todo")) {
@@ -124,8 +123,7 @@ public class Shadow {
                         taskName.append(" ");
                     }
 
-                    ToDo toDo = new ToDo(taskName.toString().trim());
-                    taskList.addTask(toDo);
+                    new AddToDoCommand(taskName.toString().trim()).execute(taskList, ui);
                 }
 
             } catch (InvalidCommandException e) {

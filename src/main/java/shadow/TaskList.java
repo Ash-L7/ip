@@ -33,8 +33,6 @@ public class TaskList {
      */
     public void addTask(Task task) {
         this.taskLists.add(task);
-        System.out.println("- added: " + task.toString());
-        System.out.println("- Now you have " + (this.numberOfTasks + 1) + " tasks in the list.");
         numberOfTasks++;
     }
 
