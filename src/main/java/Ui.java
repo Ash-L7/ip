@@ -11,4 +11,8 @@ public class Ui {
     public void onExit() {
         System.out.println("- Bye. Hope to see you again soon!\n");
     }
+
+    public void showError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }

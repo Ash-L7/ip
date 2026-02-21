@@ -123,9 +123,9 @@ public class Shadow {
                 }
 
             } catch (InvalidCommandException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             } catch (InvalidTaskDescriptionException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             } finally {
                 userInput = scanner.nextLine();
                 action = userInput.split(" ");
