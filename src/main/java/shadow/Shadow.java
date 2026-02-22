@@ -30,7 +30,7 @@ public class Shadow {
         ui.greetings();
         dataFile.hasFile(taskList);
     }
-    
+
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
