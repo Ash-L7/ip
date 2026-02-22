@@ -7,8 +7,6 @@ package shadow.task;
  * and only records the description of the task
  */
 public class ToDo extends Task {
-    private String name;
-
     /**
      * The constructor for shadow.task.ToDo shadow.task.Task object.
      * Initializes isDone and marks task as incomplete by default.
