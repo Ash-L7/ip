@@ -1,8 +1,8 @@
 package shadow;
 
-import shadow.task.Task;
-
 import java.util.ArrayList;
+
+import shadow.task.Task;
 
 /**
  * The shadow.TaskList class maintains a collection of shadow.task.Task objects using an ArrayList.
