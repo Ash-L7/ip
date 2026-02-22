@@ -30,7 +30,7 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "T," + getIsDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
+        return "E," + getIsDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
                 + "," + this.endTime.taskDate() + "," + this.endTime.taskTime();
     }
 
