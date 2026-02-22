@@ -4,7 +4,6 @@ import shadow.task.Task;
 
 public class Ui {
     public Ui() {
-
     }
 
     public void greetings() {
@@ -12,8 +11,12 @@ public class Ui {
                 + "- What can I do for you?");
     }
 
+    public void showTask(Task task) {
+        System.out.println(task.toString());
+    }
+
     public void showTaskAdded(Task task, int index) {
-        System.out.println("- added: " + task.toString());
+        System.out.println("- Added: " + task.toString());
         System.out.println("- Now you have " + index + " tasks in the list.");
     }
 
@@ -23,5 +26,17 @@ public class Ui {
 
     public void showError(String errorMessage) {
         System.out.println(errorMessage);
+    }
+
+    public void showSearchProcessing() {
+        System.out.println("- Attempting search...");
+    }
+
+    public void showSearchFail() {
+        System.out.println("- No matching tasks found");
+    }
+
+    public void showSearchSuccessful() {
+        System.out.println("- Here are the matching tasks in your list:");
     }
 }
