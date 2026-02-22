@@ -53,6 +53,11 @@ public abstract class Task {
         }
     }
 
+    /**
+     * Converts task into a string suitable for storing in a .csv file
+     *
+     * @return A string representing the way the task should be recorded in the save file.
+     */
     public abstract String toFileFormat();
 
     @Override
