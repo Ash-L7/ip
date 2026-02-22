@@ -1,8 +1,11 @@
 package shadow;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.StringBuilder;
+import java.util.stream.Collectors;
 
+import shadow.command.FindCommand;
 import shadow.command.AddDeadlineCommand;
 import shadow.command.AddEventCommand;
 import shadow.command.AddToDoCommand;
@@ -10,10 +13,11 @@ import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.ui.Ui;
 
+
 public class Shadow {
     /** A collection of all valid commands for the chatbot shadow.Shadow. */
     private static final String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark",
-            "bye"};
+            "find", "bye"};
     private final FileManager dataFile;
     private final TaskList taskList;
     private final Ui ui;
@@ -44,6 +48,13 @@ public class Shadow {
 
             try {
                 validateCommand(cmd);
+
+                if (action[0].equalsIgnoreCase("find")) {
+                    String taskDescription = Arrays.stream(action)
+                            .skip(1)
+                            .collect(Collectors.joining(" "));
+                    new FindCommand(taskDescription).execute(this.taskList, this.ui);
+                }
 
                 if (action[0].equalsIgnoreCase("list")) {
                     taskList.outputTaskList();
