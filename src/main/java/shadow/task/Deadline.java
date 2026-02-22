@@ -1,9 +1,9 @@
 package shadow.task;
 
-import shadow.TimeHandler;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import shadow.TimeHandler;
 
 /**
  * Deadline is a subclass of Task with a [D] marker.

@@ -1,13 +1,14 @@
 package shadow;
 
+import java.util.Scanner;
+import java.lang.StringBuilder;
+
 import shadow.command.AddDeadlineCommand;
 import shadow.command.AddEventCommand;
 import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.ui.Ui;
-import java.util.Scanner;
-import java.lang.StringBuilder;
 
 public class Shadow {
     /** A collection of all valid commands for the chatbot shadow.Shadow. */
