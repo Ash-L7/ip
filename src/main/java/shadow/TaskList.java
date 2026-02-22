@@ -1,6 +1,7 @@
 package shadow;
 
 import shadow.task.Task;
+import shadow.ui.Ui;
 
 import java.util.ArrayList;
 
@@ -67,5 +68,28 @@ public class TaskList {
      */
     public Task getTask(int index) {
         return this.taskLists.get(index - 1);
+    }
+
+    public void findTask(String taskDescription, Ui ui) {
+        boolean hasMatch = false;
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+
+        for (Task task : this.taskLists) {
+            if (task.toString().contains(taskDescription)) {
+                hasMatch = true;
+                matchingTasks.add(task);
+            }
+        }
+
+        if (!hasMatch) {
+            ui.showSearchFail();
+        } else {
+            ui.showSearchSuccessful();
+
+            for (int j = 0; j < matchingTasks.size(); j++) {
+                System.out.print((j + 1) + ". ");
+                ui.showTask(matchingTasks.get(j));
+            }
+        }
     }
 }
