@@ -15,6 +15,13 @@ public class TimeHandler {
     String dateText;
     String timeText;
 
+    /**
+     * Initializes the handler by parsing string representations of date and time.
+     * Attempts to parse dates in "d/M/yyyy" format and times in "HHmm" format before falling back to ISO defaults.
+     *
+     * @param date
+     * @param time
+     */
     public TimeHandler(String date, String time) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         try {
@@ -38,6 +45,12 @@ public class TimeHandler {
         this.timeText = this.time.format(timeTextFormatter);
     }
 
+    /**
+     * Initializes the handler using existing LocalDate and LocalTime objects.
+     *
+     * @param date
+     * @param time
+     */
     public TimeHandler(LocalDate date, LocalTime time) {
         this.date = date;
         this.time = time;
@@ -50,14 +63,30 @@ public class TimeHandler {
         this.timeText = this.time.format(timeTextFormatter);
     }
 
+    /**
+     * Returns the stored LocalDate object.
+     *
+     * @return
+     */
     public LocalDate taskDate() {
         return this.date;
     }
 
+    /**
+     * Returns the stored LocalTime object.
+     *
+     * @return
+     */
     public LocalTime taskTime() {
         return this.time;
     }
 
+    /**
+     * Determines the ordinal suffix for a given day of the month.
+     *
+     * @param day
+     * @return
+     */
     private final String GetDaySuffix(int day) {
         switch (day) {
             case 1:
@@ -75,6 +104,11 @@ public class TimeHandler {
         }
     }
 
+    /**
+     * Returns a formatted string representation of the date and time.
+     * 
+     * @return
+     */
     @Override
     public String toString() {
         return this.dateText + " " + this.timeText;
