@@ -43,7 +43,7 @@ public class TimeHandler {
         this.time = time;
 
         DateTimeFormatter dateTextFormatter = DateTimeFormatter.ofPattern("LLLL yyyy");
-        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mma");
 
         int day = this.date.getDayOfMonth();
         this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
