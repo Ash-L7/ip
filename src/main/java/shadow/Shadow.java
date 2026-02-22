@@ -17,6 +17,11 @@ public class Shadow {
     private final TaskList taskList;
     private final Ui ui;
 
+    /**
+     * Initializes core components of the chatbot.
+     * Displays a greeting message.
+     * Synchronizes task list with local data file.
+     */
     public Shadow() {
         dataFile = new FileManager();
         taskList = new TaskList();
@@ -25,7 +30,7 @@ public class Shadow {
         ui.greetings();
         dataFile.hasFile(taskList);
     }
-
+    
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
