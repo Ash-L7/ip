@@ -1,30 +1,112 @@
-# shadow.Shadow User Guide
+# Shadow User Guide
 
-// Update the title above to match the actual product name
+![Product screenshot](https://ash-l7.github.io/ip/Ui.png)
 
-// Product screenshot goes here
+Shadow is a task management chatbot, acting just like your shadow, helping you remember your tasks.
 
-// Product intro goes here
+## Command Summary
 
-## Adding deadlines
+| Command  | Format                           | Example                                                      |
+|----------|----------------------------------|--------------------------------------------------------------|
+| Todo     | `todo TASK`                      | `todo read book`                                             |
+| Deadline | `deadline TASK /by DATE`         | `deadline Return book /by 2026-02-23 23:59`                  |
+| Event    | `event TASK /from START /to END` | `event Rockfest /from 2026-03-09 18:00 /to 2026-03-10 00:00` |
+| List     | `list`                           |                                                              |
+| Find     | `find TASK_DESCRIPTION`          | `find fest`                                                  |
+| Mark     | `mark TASK_NUMBER`               | `mark 2`                                                     |
+| Unmark   | `unmark TASK_NUMBER`             | `unmark 3`                                                   |
+| Delete   | `delete TASK_NUMBER`             | `delete 1`                                                   |
+| Sort     | `sort`                           |                                                              |
+| Bye      | `bye`                            |                                                              |
 
-// Describe the action and its outcome.
+## Adding todo tasks
 
-// Give examples of usage
+Adds a generic todo task.
 
-Example: `keyword (optional arguments)`
+**Format:** `todo TASK`
 
-// A description of the expected outcome goes here
+**Example:** `todo read book`
 
-```
-expected output
-```
+## Adding deadline tasks
 
-## Feature ABC
+Adds a task with a deadline.
 
-// Feature details
+**Format:** `deadline TASK /by DATE`
 
+- DATE must be in the format `yyyy-mm-dd`
+- TIME must be in the format `HH:mm`
 
-## Feature XYZ
+**Example:** `deadline Return book /by 2026-02-23 23:59`
 
-// Feature details
+## Adding event tasks
+
+Adds a task occurring over a period of time.
+
+**Format:** `event TASK /from START /to END`
+
+- START/END must be in the format `yyyy-mm-dd`
+- TIME must be in the format `HH:mm`
+
+**Example:** `event Rockfest /from 2026-03-09 18:00 /to 2026-03-10 00:00`
+
+## Listing tasks
+
+Displays every task in the task list.
+
+**Format:** `list`
+
+## Finding tasks
+
+Finds tasks which contain the given description.
+
+**Format:** `find TASK_DESCRIPTION`
+
+- Tasks whose description is a superstring of TASK_DESCRIPTION will be shown
+
+**Example:** `find homework`
+
+## Marking tasks
+
+Marks a task as complete.
+
+**Format:** `mark TASK_NUMBER`
+
+- TASK_NUMBER must not be greater than the number of tasks in the list
+- A task which is already marked will remain marked
+
+**Example:** `mark 2`
+
+## Unmarking tasks
+
+Marks a task as incomplete.
+
+**Format:** `unmark TASK_NUMBER`
+
+- TASK_NUMBER must not be greater than the number of tasks in the list
+- A task which is not yet marked will remain unmarked
+
+**Example:** `unmark 3`
+
+## Deleting tasks
+
+Deletes a task from the task list.
+
+**Format:** `delete TASK_NUMBER`
+
+- TASK_NUMBER must not be greater than the number of tasks in the list
+-
+
+**Example:** `delete 1`
+
+## Sorting tasks
+
+Sorts all tasks in the given grouping by type in the order: Deadline, Event, ToDo.
+- Deadlines are sorted by due date/time
+- Events are sorted by start date/time
+- ToDos are sorted alphabetically
+
+## Closing the program
+
+Closes the program after a brief delay.
+
+**Format:** `bye`
