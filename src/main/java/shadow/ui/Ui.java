@@ -11,6 +11,14 @@ public class Ui {
                 + "- What can I do for you?");
     }
 
+    /**
+     * Returns the greeting text for GUI display (does not print).
+     * @return greeting message
+     */
+    public String greetingsText() {
+        return "- Hello! I'm Shadow\n- What can I do for you?";
+    }
+
     public void showTask(Task task) {
         System.out.println(task.toString());
     }

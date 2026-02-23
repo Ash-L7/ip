@@ -24,28 +24,32 @@ public class FileManager {
         this.dataFile = new File(FILE_PATH);
     }
 
-    /** Looks for the file in the specified path
-     *  Creates one if it doesn't exist.
+    /**
+     * Ensures the data directory and file exist. Reads the file into the provided taskList if present.
+     * Returns a startup message suitable for GUI display.
      *
      * @param taskList The task list that will be accessed by readFile.
+     * @return startup message describing the file status
      */
-    public void hasFile(TaskList taskList) {
+    public String hasFile(TaskList taskList) {
         try {
             File directory = new File(DIRECTORY_PATH);
 
             if (!directory.exists()) {
-                System.out.println("- Oops! You're missing a folder. Don't worry, I got you.");
                 directory.mkdirs();
+                if (dataFile.createNewFile()) {
+                    return "- Oops! You're missing a folder. Don't worry, I got you.\n- Hmm... It seems there isn't a save file. Let's get you one.";
+                }
             }
 
             if (dataFile.createNewFile()) {
-                System.out.println("- Hmm... It seems there isn't a save file. Let's get you one.");
+                return "- Hmm... It seems there isn't a save file. Let's get you one.";
             } else {
-                System.out.println("- Welcome back. Let's get you back on track.");
                 readFile(taskList);
+                return "- Welcome back. Let's get you back on track.";
             }
         } catch (IOException e) {
-            System.out.println("- Error occurred: " + e.getMessage());
+            return "- Error occurred: " + e.getMessage();
         }
     }
 
