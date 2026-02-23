@@ -26,6 +26,9 @@ public class Shadow {
         dataFile = new FileManager();
         taskList = new TaskList();
         ui = new Ui();
+        assert dataFile != null : "FileManager should be initialized";
+        assert taskList != null : "TaskList should be initialized";
+        assert ui != null : "Ui should be initialized";
 
         StringBuilder startupMessage = new StringBuilder();
         startupMessage.append(ui.greetingsText());
@@ -37,6 +40,8 @@ public class Shadow {
         }
 
         this.startupMessage = startupMessage.toString();
+        assert this.startupMessage != null : "startupMessage should not be null";
+        assert !this.startupMessage.isEmpty() : "startupMessage should not be empty";
     }
 
     /**
@@ -45,6 +50,7 @@ public class Shadow {
      * @return The startup message string.
      */
     public String getStartupMessage() {
+        assert this.startupMessage != null : "Startup message should never be null";
         return this.startupMessage;
     }
 
@@ -56,12 +62,17 @@ public class Shadow {
      * @return The response message to display to the user.
      */
     public String getResponse(String input) {
+        assert input != null : "Input cannot be null (should be checked before calling)";
         if (input == null || input.trim().isEmpty()) {
             return "- Please enter a command.";
         }
+        assert taskList != null : "taskList must be initialized";
+        assert taskList.getSize() >= 0 : "taskList size cannot be negative";
 
         String[] action = input.split(" ");
+        assert action.length > 0 : "action array must have at least one element after split";
         String cmd = action[0];
+        assert cmd != null && !cmd.isEmpty() : "Command cannot be null or empty";
         StringBuilder response = new StringBuilder();
 
         try {
@@ -113,6 +124,8 @@ public class Shadow {
                 validateTaskDescription(action);
                 StringBuilder taskName = new StringBuilder();
                 boolean isTaskName = true;
+
+                assert taskList.getSize() > 0 : "taskList should have at least one task when size > 0";
                 int startIndex = 0;
                 int endIndex = 0;
 
@@ -162,10 +175,13 @@ public class Shadow {
             }
 
         } catch (InvalidCommandException e) {
+            assert e.getMessage() != null : "Exception message should not be null";
             return e.getMessage();
         } catch (InvalidTaskDescriptionException e) {
+            assert e.getMessage() != null : "Exception message should not be null";
             return e.getMessage();
         } catch (Exception e) {
+            assert e.getMessage() != null : "Exception should have a message";
             return "- Oops! Something went wrong: " + e.getMessage();
         }
 

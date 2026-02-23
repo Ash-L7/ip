@@ -36,20 +36,25 @@ public class FileManager {
      * @return startup message describing the file status
      */
     public String hasFile(TaskList taskList) {
+        assert taskList != null : "taskList parameter cannot be null";
         try {
             File directory = new File(DIRECTORY_PATH);
 
             if (!directory.exists()) {
                 directory.mkdirs();
+                assert directory.exists() : "Directory should exist after mkdirs() call";
                 if (dataFile.createNewFile()) {
                     return "- Oops! You're missing a folder. Don't worry, I got you.\n- Hmm... It seems there isn't a save file. Let's get you one.";
                 }
             }
 
             if (dataFile.createNewFile()) {
+                assert dataFile.exists() : "File should exist after createNewFile()";
                 return "- Hmm... It seems there isn't a save file. Let's get you one.";
             } else {
+                assert dataFile.exists() : "File must exist if createNewFile() returned false";
                 readFile(taskList);
+                assert taskList.getSize() >= 0 : "taskList size cannot be negative after reading file";
                 return "- Welcome back. Let's get you back on track.";
             }
         } catch (IOException e) {

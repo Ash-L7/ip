@@ -28,6 +28,8 @@ public class TaskList {
      * @return The number of tasks.
      */
     public int getSize() {
+        assert this.numberOfTasks >= 0 : "numberOfTasks cannot be negative";
+        assert this.numberOfTasks == this.taskLists.size() : "numberOfTasks must match ArrayList size";
         return this.numberOfTasks;
     }
 
@@ -37,8 +39,10 @@ public class TaskList {
      * @param task The Task object to add.
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add a null task to the list";
         this.taskLists.add(task);
         numberOfTasks++;
+        assert this.numberOfTasks == this.taskLists.size() : "After adding, numberOfTasks must match ArrayList size";
     }
 
     /**
@@ -76,26 +80,12 @@ public class TaskList {
      * @param index Position of the task in the list (1-based).
      * @return The String representation of the removed task.
      */
-    public String removeTask(int index) {
+    public void removeTask(int index) {
+        assert index >= 1 && index <= this.numberOfTasks : "Task index must be between 1 and numberOfTasks";
         String taskRemoved = taskLists.get(index - 1).toString();
         taskLists.remove(index - 1);
         numberOfTasks--;
-        return taskRemoved;
-    }
-
-    /**
-     * Removes a task and returns a formatted response message.
-     *
-     * @param index Position of the task in the list (1-based).
-     * @return Formatted message confirming task removal.
-     */
-    public String getFormattedRemoveResponse(int index) {
-        String taskRemoved = removeTask(index);
-        StringBuilder response = new StringBuilder("- Noted. I've removed this task:\n");
-        response.append(taskRemoved).append("\nNow you have ").append(numberOfTasks)
-                .append(" tasks in the list.");
-        return response.toString();
-    }
+        assert this.numberOfTasks == this.taskLists.size() : "After removal, numberOfTasks must match ArrayList size";
 
     /**
      * Marks a task as done or not done and returns a formatted response.
@@ -125,6 +115,7 @@ public class TaskList {
      * @return The Task object at the specified position.
      */
     public Task getTask(int index) {
+        assert index >= 1 && index <= this.numberOfTasks : "Task index must be between 1 and numberOfTasks (inclusive)";
         return this.taskLists.get(index - 1);
     }
 

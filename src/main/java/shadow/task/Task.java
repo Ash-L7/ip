@@ -17,6 +17,8 @@ public abstract class Task {
      * @param name The description of the task.
      */
     public Task(String name) {
+        assert name != null : "Task name cannot be null";
+        assert !name.trim().isEmpty() : "Task name cannot be empty";
         this.name = name;
         this.isDone = false;
     }
@@ -26,8 +28,13 @@ public abstract class Task {
      *
      * @return "X" if task is done, " " (space) if not done.
      */
-    public String isDone() {
-        return this.isDone ? "X" : " ";
+    public String getIsDone() {
+        assert this.isDone == true || this.isDone == false : "isDone must be a valid boolean value";
+        if (this.isDone) {
+            return "X";
+        }
+
+        return " ";
     }
 
     /**
@@ -38,7 +45,17 @@ public abstract class Task {
      * @param status true to mark task as done, false to mark as not done.
      */
     public void setDone(boolean status) {
-        this.isDone = status;
+        if (status) {
+            this.isDone = true;
+            assert this.isDone : "isDone should be true after setDone(true)";
+            System.out.println("- Nice! I've marked this task as done: ");
+            System.out.println(this.toString());
+        } else {
+            this.isDone = false;
+            assert !this.isDone : "isDone should be false after setDone(false)";
+            System.out.println("- OK, I've marked this task as not done yet: ");
+            System.out.println(this.toString());
+        }
     }
 
     /**
