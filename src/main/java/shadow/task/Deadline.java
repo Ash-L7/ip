@@ -27,9 +27,27 @@ public class Deadline extends Task {
         this.deadline = new TimeHandler(deadlineDate, deadlineTime);
     }
 
+    /**
+     * Returns the LocalDate of this deadline.
+     *
+     * @return the due date
+     */
+    public LocalDate getDeadlineDate() {
+        return this.deadline.taskDate();
+    }
+
+    /**
+     * Returns the LocalTime of this deadline.
+     *
+     * @return the due time
+     */
+    public LocalTime getDeadlineTime() {
+        return this.deadline.taskTime();
+    }
+
     @Override
     public String toFileFormat() {
-        return "D," + isDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
+        return "D," + this.getIsDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
     }
 
     @Override

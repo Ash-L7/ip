@@ -34,9 +34,27 @@ public class Event extends Task {
         this.endTime = new TimeHandler(endDate, endTime);
     }
 
+    /**
+     * Returns the start LocalDate of the event.
+     *
+     * @return start date
+     */
+    public LocalDate getStartDate() {
+        return this.startTime.taskDate();
+    }
+
+    /**
+     * Returns the start LocalTime of the event.
+     *
+     * @return start time
+     */
+    public LocalTime getStartTime() {
+        return this.startTime.taskTime();
+    }
+
     @Override
     public String toFileFormat() {
-        return "E," + isDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
+        return "E," + this.getIsDone() + "," + this.name + "," + this.startTime.taskDate() + "," + this.startTime.taskTime()
                 + "," + this.endTime.taskDate() + "," + this.endTime.taskTime();
     }
 
