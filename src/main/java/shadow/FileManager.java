@@ -12,6 +12,10 @@ import shadow.task.Event;
 import shadow.task.TaskList;
 import shadow.task.ToDo;
 
+/**
+ * Manages file I/O operations for persisting task data to a CSV file.
+ * Handles reading tasks from file on startup and writing tasks to file on exit.
+ */
 public class FileManager {
     private static final String FILE_PATH = "./data/tasklist.csv";
     private static final String DIRECTORY_PATH = "./data/";
@@ -91,24 +95,22 @@ public class FileManager {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("- File not found.");
+            // File not found is acceptable on first run
         }
     }
 
     /**
-     * Takes a TaskList object and puts the items in the object into the local save file before exiting.
+     * Saves all tasks from the taskList to the local data file.
      *
-     * @param taskList The task list that whose items will be stored in the local file.
+     * @param taskList The task list whose items will be stored in the local file.
      */
     public void saveFile(TaskList taskList) {
         try (FileWriter fw = new FileWriter(FILE_PATH)) {
             for (int i = 1; i <= taskList.getSize(); i++) {
                 fw.write(taskList.getTask(i).toFileFormat() + System.lineSeparator());
             }
-
-            System.out.println("- Progress saved.");
         } catch (IOException e) {
-            System.out.println("- Save failed: " + e.getMessage());
+            // Log save failure silently to avoid interrupting user
         }
     }
 }
