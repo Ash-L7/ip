@@ -22,6 +22,8 @@ public class TaskList {
     }
 
     public int getSize() {
+        assert this.numberOfTasks >= 0 : "numberOfTasks cannot be negative";
+        assert this.numberOfTasks == this.taskLists.size() : "numberOfTasks must match ArrayList size";
         return this.numberOfTasks;
     }
 
@@ -32,8 +34,10 @@ public class TaskList {
      * @param task shadow.task.Task object to be added to the list.
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add a null task to the list";
         this.taskLists.add(task);
         numberOfTasks++;
+        assert this.numberOfTasks == this.taskLists.size() : "After adding, numberOfTasks must match ArrayList size";
     }
 
     /**
@@ -51,9 +55,11 @@ public class TaskList {
      * @param index Position of the task in the list
      */
     public void removeTask(int index) {
+        assert index >= 1 && index <= this.numberOfTasks : "Task index must be between 1 and numberOfTasks";
         String taskRemoved = taskLists.get(index - 1).toString();
         taskLists.remove(index - 1);
         numberOfTasks--;
+        assert this.numberOfTasks == this.taskLists.size() : "After removal, numberOfTasks must match ArrayList size";
 
         System.out.println("- Noted. I've removed this task:\n" + taskRemoved + "\nNow you have " + numberOfTasks +
                 " tasks in the list.");
@@ -66,6 +72,7 @@ public class TaskList {
      * @return shadow.task.Task object at the specified position in the list.
      */
     public Task getTask(int index) {
+        assert index >= 1 && index <= this.numberOfTasks : "Task index must be between 1 and numberOfTasks (inclusive)";
         return this.taskLists.get(index - 1);
     }
 
