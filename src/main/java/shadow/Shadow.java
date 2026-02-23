@@ -62,6 +62,7 @@ public class Shadow {
      * @param input The user's input command.
      * @return The response message to display to the user.
      */
+    //GitHub Copilot used: change if-else to switch-case for commands
     public String getResponse(String input) {
         assert input != null : "Input cannot be null (should be checked before calling)";
         if (input == null || input.trim().isEmpty()) {
@@ -79,33 +80,28 @@ public class Shadow {
         try {
             validateCommand(cmd);
 
-            if (cmd.equalsIgnoreCase("find")) {
+            switch (cmd.toLowerCase()) {
+            case "find": {
                 String taskDescription = Arrays.stream(action)
                         .skip(1)
                         .collect(Collectors.joining(" "));
                 return taskList.findTask(taskDescription);
             }
-
-            if (cmd.equalsIgnoreCase("list")) {
+            case "list":
                 return taskList.getFormattedTaskList();
-            }
-
-            if (cmd.equalsIgnoreCase("sort")) {
+            case "sort":
                 return Sorter.sortAll(taskList);
-            }
-
-            if (cmd.equalsIgnoreCase("mark") || cmd.equalsIgnoreCase("unmark")) {
+            case "mark":
+            case "unmark": {
                 int index = Integer.parseInt(action[1]);
                 boolean status = cmd.equalsIgnoreCase("mark");
                 return taskList.getFormattedMarkResponse(index, status);
             }
-
-            if (cmd.equalsIgnoreCase("delete")) {
+            case "delete": {
                 int index = Integer.parseInt(action[1]);
                 return taskList.removeTask(index);
             }
-
-            if (cmd.equalsIgnoreCase("deadline")) {
+            case "deadline": {
                 validateTaskDescription(action);
                 StringBuilder taskName = new StringBuilder();
                 int timeIndex = 0;
@@ -124,8 +120,7 @@ public class Shadow {
                 return taskList.addDeadlineAndGetResponse(taskName.toString().trim(), 
                         timeHandler.taskDate(), timeHandler.taskTime());
             }
-
-            if (cmd.equalsIgnoreCase("event")) {
+            case "event": {
                 validateTaskDescription(action);
                 StringBuilder taskName = new StringBuilder();
                 boolean isTaskName = true;
@@ -160,8 +155,7 @@ public class Shadow {
                         startTime.taskDate(), startTime.taskTime(),
                         endTime.taskDate(), endTime.taskTime());
             }
-
-            if (cmd.equalsIgnoreCase("todo")) {
+            case "todo": {
                 validateTaskDescription(action);
                 StringBuilder taskName = new StringBuilder();
 
@@ -172,11 +166,13 @@ public class Shadow {
 
                 return taskList.addTodoAndGetResponse(taskName.toString().trim());
             }
-
-            if (cmd.equalsIgnoreCase("bye")) {
+            case "bye": {
                 dataFile.saveFile(taskList);
                 ui.onExit();
                 return "- Bye. Hope to see you again soon!";
+            }
+            default:
+                break; // fall through to return at end
             }
 
         } catch (InvalidCommandException e) {
