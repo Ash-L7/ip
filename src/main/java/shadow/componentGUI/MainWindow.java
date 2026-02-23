@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.application.Platform;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -56,5 +59,13 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getShadowDialog(shadowChatbotResponse, shadowImage)
         );
         userInput.clear();
+
+        if (userCommand != null && userCommand.trim().equalsIgnoreCase("bye")) {
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+            PauseTransition delay = new PauseTransition(Duration.seconds(5));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 }
