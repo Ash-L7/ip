@@ -29,6 +29,7 @@ public class TimeHandler {
         } catch (DateTimeParseException e) {
             this.date = LocalDate.parse(date);
         }
+        assert this.date != null : "Parsed date cannot be null";
 
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
         try {
@@ -36,11 +37,13 @@ public class TimeHandler {
         } catch (DateTimeParseException e) {
             this.time = LocalTime.parse(time);
         }
+        assert this.time != null : "Parsed time cannot be null";
 
         DateTimeFormatter dateTextFormatter = DateTimeFormatter.ofPattern("LLLL yyyy");
         DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mm a");
 
         int day = this.date.getDayOfMonth();
+        assert day >= 1 && day <= 31 : "Day must be between 1 and 31";
         this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
         this.timeText = this.time.format(timeTextFormatter);
     }
@@ -52,6 +55,8 @@ public class TimeHandler {
      * @param time
      */
     public TimeHandler(LocalDate date, LocalTime time) {
+        assert date != null : "Constructor parameter date cannot be null";
+        assert time != null : "Constructor parameter time cannot be null";
         this.date = date;
         this.time = time;
 
@@ -59,6 +64,7 @@ public class TimeHandler {
         DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mma");
 
         int day = this.date.getDayOfMonth();
+        assert day >= 1 && day <= 31 : "Day must be between 1 and 31";
         this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
         this.timeText = this.time.format(timeTextFormatter);
     }
