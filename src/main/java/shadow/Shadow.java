@@ -117,7 +117,7 @@ public class Shadow {
                 }
 
                 TimeHandler timeHandler = new TimeHandler(action[timeIndex], action[timeIndex + 1]);
-                return taskList.addDeadlineAndGetResponse(taskName.toString().trim(), 
+                return taskList.addDeadlineAndGetResponse(taskName.toString().trim(),
                         timeHandler.taskDate(), timeHandler.taskTime());
             }
             case "event": {
@@ -151,7 +151,7 @@ public class Shadow {
                 TimeHandler startTime = new TimeHandler(action[startIndex], action[startIndex + 1]);
                 TimeHandler endTime = new TimeHandler(action[endIndex], action[endIndex + 1]);
 
-                return taskList.addEventAndGetResponse(taskName.toString().trim(), 
+                return taskList.addEventAndGetResponse(taskName.toString().trim(),
                         startTime.taskDate(), startTime.taskTime(),
                         endTime.taskDate(), endTime.taskTime());
             }
@@ -169,6 +169,17 @@ public class Shadow {
             case "bye": {
                 dataFile.saveFile(taskList);
                 ui.onExit();
+                Thread exitThread = new Thread(() -> {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ie) {
+
+                    }
+                    System.exit(0);
+                });
+                exitThread.setDaemon(true);
+                exitThread.start();
+
                 return "- Bye. Hope to see you again soon!";
             }
             default:
