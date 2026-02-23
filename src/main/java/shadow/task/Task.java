@@ -68,6 +68,6 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return "[" + isDone() + "] " + this.name;
+        return "[" + this.getIsDone() + "] " + this.name;
     }
 }
