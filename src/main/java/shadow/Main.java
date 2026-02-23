@@ -10,7 +10,28 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import shadow.componentGUI.DialogBox;
+
 public class Main extends Application {
+    private static final String DEFAULT_FILE_PATH = "./data/tasklist.csv";
+    private final Shadow shadowChatbot;
+
+    /**
+     * Creates a Main application with the specified file path for task storage.
+     *
+     * @param filePath The path to the file for storing tasks.
+     */
+    public Main(String filePath) {
+        shadowChatbot = new Shadow();
+    }
+
+    /**
+     * Creates a Main application with the default file path for task storage.
+     */
+    public Main() {
+        this(DEFAULT_FILE_PATH);
+    }
+
     private ScrollPane scrollPane;
     private VBox dialogContainer;
     private TextField userInput;
@@ -18,8 +39,13 @@ public class Main extends Application {
     private Scene scene;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Shadow.png"));
+    private Image shadowImage = new Image(this.getClass().getResourceAsStream("/images/Shadow.png"));
 
+    /**
+     * Starts the JavaFX application by displaying the GUI.
+     *
+     * @param stage The primary stage for this application.
+     */
     @Override
     public void start(Stage stage) {
         scrollPane = new ScrollPane();
@@ -28,6 +54,9 @@ public class Main extends Application {
 
         userInput = new TextField();
         sendButton = new Button("Send");
+
+        DialogBox dialogBox = new DialogBox("Hello!", userImage);
+        dialogContainer.getChildren().addAll(dialogBox);
 
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
