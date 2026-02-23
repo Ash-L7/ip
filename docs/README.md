@@ -31,7 +31,7 @@ Adds a generic todo task.
 
 Adds a task with a deadline.
 
-**Format:** `deadline TASK /by DATE`
+**Format:** `deadline TASK /by DATE TIME`
 
 - DATE must be in the format `yyyy-mm-dd`
 - TIME must be in the format `HH:mm`
@@ -42,7 +42,7 @@ Adds a task with a deadline.
 
 Adds a task occurring over a period of time.
 
-**Format:** `event TASK /from START /to END`
+**Format:** `event TASK /from START_DATE START_TIME /to END_DATE END_TIME`
 
 - START/END must be in the format `yyyy-mm-dd`
 - TIME must be in the format `HH:mm`
@@ -63,7 +63,7 @@ Finds tasks which contain the given description.
 
 - Tasks whose description is a superstring of TASK_DESCRIPTION will be shown
 
-**Example:** `find homework`
+**Example:** `find book`
 
 ## Marking tasks
 
@@ -94,7 +94,6 @@ Deletes a task from the task list.
 **Format:** `delete TASK_NUMBER`
 
 - TASK_NUMBER must not be greater than the number of tasks in the list
--
 
 **Example:** `delete 1`
 
@@ -104,6 +103,8 @@ Sorts all tasks in the given grouping by type in the order: Deadline, Event, ToD
 - Deadlines are sorted by due date/time
 - Events are sorted by start date/time
 - ToDos are sorted alphabetically
+
+**Format:** `sort`
 
 ## Closing the program
 
