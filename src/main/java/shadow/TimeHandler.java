@@ -49,7 +49,7 @@ public class TimeHandler {
 
         int day = this.date.getDayOfMonth();
         assert day >= 1 && day <= 31 : "Day must be between 1 and 31";
-        this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
+        this.dateText = day + getDaySuffix(day) + " " + this.date.format(dateTextFormatter);
         this.timeText = this.time.format(timeTextFormatter);
     }
 
@@ -66,11 +66,11 @@ public class TimeHandler {
         this.time = time;
 
         DateTimeFormatter dateTextFormatter = DateTimeFormatter.ofPattern("LLLL yyyy");
-        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        DateTimeFormatter timeTextFormatter = DateTimeFormatter.ofPattern("h:mma");
 
         int day = this.date.getDayOfMonth();
         assert day >= 1 && day <= 31 : "Day must be between 1 and 31";
-        this.dateText = day + GetDaySuffix(day) + " " + this.date.format(dateTextFormatter);
+        this.dateText = day + getDaySuffix(day) + " " + this.date.format(dateTextFormatter);
         this.timeText = this.time.format(timeTextFormatter);
     }
 
