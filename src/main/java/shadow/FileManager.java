@@ -73,7 +73,7 @@ public class FileManager {
                 String line = s.nextLine();
                 String[] parts = line.split(",");
                 String type = parts[0].trim();
-                boolean isDone = parts[1].trim().equals("1");
+                boolean isDone = parts[1].trim().equals("X");
                 String desc = parts[2].trim();
 
                 Task task = null;
