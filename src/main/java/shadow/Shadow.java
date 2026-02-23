@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.task.TaskList;
+import shadow.task.Sorter;
 import shadow.ui.Ui;
 
 /**
@@ -89,6 +90,10 @@ public class Shadow {
                 return taskList.getFormattedTaskList();
             }
 
+            if (cmd.equalsIgnoreCase("sort")) {
+                return Sorter.sortAll(taskList);
+            }
+
             if (cmd.equalsIgnoreCase("mark") || cmd.equalsIgnoreCase("unmark")) {
                 int index = Integer.parseInt(action[1]);
                 boolean status = cmd.equalsIgnoreCase("mark");
@@ -97,7 +102,7 @@ public class Shadow {
 
             if (cmd.equalsIgnoreCase("delete")) {
                 int index = Integer.parseInt(action[1]);
-                return taskList.getFormattedRemoveResponse(index);
+                return taskList.removeTask(index);
             }
 
             if (cmd.equalsIgnoreCase("deadline")) {
@@ -195,7 +200,7 @@ public class Shadow {
      * @throws InvalidCommandException if command is not valid.
      */
     public static void validateCommand(String command) throws InvalidCommandException {
-        String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark", "find", "bye"};
+        String[] validCommands = {"todo", "deadline", "event", "list", "sort", "delete", "mark", "unmark", "find", "bye"};
         for (String cmd : validCommands) {
             if (command.equalsIgnoreCase(cmd)) {
                 return;
