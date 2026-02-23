@@ -2,8 +2,6 @@ package shadow.task;
 
 import java.util.ArrayList;
 
-import shadow.ui.Ui;
-
 /**
  * Manages a collection of Task objects.
  * Provides methods for adding, removing, and searching tasks.
@@ -80,12 +78,19 @@ public class TaskList {
      * @param index Position of the task in the list (1-based).
      * @return The String representation of the removed task.
      */
-    public void removeTask(int index) {
+    public String removeTask(int index) {
         assert index >= 1 && index <= this.numberOfTasks : "Task index must be between 1 and numberOfTasks";
         String taskRemoved = taskLists.get(index - 1).toString();
         taskLists.remove(index - 1);
         numberOfTasks--;
         assert this.numberOfTasks == this.taskLists.size() : "After removal, numberOfTasks must match ArrayList size";
+
+        StringBuilder response = new StringBuilder();
+        response.append("- Noted. I've removed this task:\n");
+        response.append(taskRemoved);
+        response.append("\nNow you have ").append(numberOfTasks).append(" tasks in the list.");
+        return response.toString();
+    }
 
     /**
      * Marks a task as done or not done and returns a formatted response.
@@ -174,6 +179,12 @@ public class TaskList {
         ToDo todo = new ToDo(taskName);
         addTask(todo);
         return getFormattedAddResponse(todo);
+    }
+
+    // Package-private accessor to allow helper classes in the same package to
+    // operate on the internal task list (used by Sorter).
+    ArrayList<Task> getInternalList() {
+        return this.taskLists;
     }
 
     /**
