@@ -1,36 +1,26 @@
 package shadow;
 
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
 import shadow.task.TaskList;
-import shadow.task.ToDo;
-import shadow.task.Deadline;
-import shadow.task.Event;
-import shadow.task.Task;
 import shadow.ui.Ui;
-import shadow.command.FindCommand;
-import shadow.command.AddDeadlineCommand;
-import shadow.command.AddEventCommand;
-import shadow.command.AddToDoCommand;
 
-
+/**
+ * The main chatbot class that handles user commands and manages task operations.
+ * Coordinates between UI, task management, and file persistence.
+ */
 public class Shadow {
-    /** A collection of all valid commands for the chatbot shadow.Shadow. */
-    private static final String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark",
-            "find", "bye"};
     private final FileManager dataFile;
     private final TaskList taskList;
     private final Ui ui;
     private final String startupMessage;
 
     /**
-     * Initializes core components of the chatbot.
-     * Displays a greeting message.
-     * Synchronizes task list with local data file.
+     * Initializes core components of the Shadow chatbot.
+     * Displays a greeting message and synchronizes the task list with the local data file.
      */
     public Shadow() {
         dataFile = new FileManager();
@@ -49,13 +39,21 @@ public class Shadow {
         this.startupMessage = startupMessage.toString();
     }
 
-    /** Returns startup messages (greeting + file status) for GUI display. */
+    /**
+     * Returns startup messages (greeting + file status) for GUI display.
+     *
+     * @return The startup message string.
+     */
     public String getStartupMessage() {
         return this.startupMessage;
     }
 
     /**
      * Generates a response for the user's chat message.
+     * Parses the command and delegates to appropriate command handlers.
+     *
+     * @param input The user's input command.
+     * @return The response message to display to the user.
      */
     public String getResponse(String input) {
         if (input == null || input.trim().isEmpty()) {
@@ -73,70 +71,22 @@ public class Shadow {
                 String taskDescription = Arrays.stream(action)
                         .skip(1)
                         .collect(Collectors.joining(" "));
-
-                java.util.ArrayList<Task> matchingTasks = new java.util.ArrayList<>();
-                for (int i = 1; i <= taskList.getSize(); i++) {
-                    Task t = taskList.getTask(i);
-                    if (t.toString().contains(taskDescription)) {
-                        matchingTasks.add(t);
-                    }
-                }
-
-                if (matchingTasks.isEmpty()) {
-                    response.append("- No matching tasks found");
-                } else {
-                    response.append("- Here are the matching tasks in your list:\n");
-                    for (int j = 0; j < matchingTasks.size(); j++) {
-                        response.append((j + 1) + ". " + matchingTasks.get(j).toString());
-                        if (j < matchingTasks.size() - 1) {
-                            response.append("\n");
-                        }
-                    }
-                }
-
-                return response.toString();
+                return taskList.findTask(taskDescription);
             }
 
             if (cmd.equalsIgnoreCase("list")) {
-                if (taskList.getSize() == 0) {
-                    return "- No tasks in the list.";
-                }
-
-                for (int i = 1; i <= taskList.getSize(); i++) {
-                    response.append(i + ". " + taskList.getTask(i).toString());
-                    if (i < taskList.getSize()) {
-                        response.append("\n");
-                    }
-                }
-
-                return response.toString();
+                return taskList.getFormattedTaskList();
             }
 
             if (cmd.equalsIgnoreCase("mark") || cmd.equalsIgnoreCase("unmark")) {
                 int index = Integer.parseInt(action[1]);
                 boolean status = cmd.equalsIgnoreCase("mark");
-                Task t = taskList.getTask(index);
-                t.setDone(status);
-
-                if (status) {
-                    response.append("- Nice! I've marked this task as done:\n");
-                } else {
-                    response.append("- OK, I've marked this task as not done yet:\n");
-                }
-
-                response.append(t.toString());
-                return response.toString();
+                return taskList.getFormattedMarkResponse(index, status);
             }
 
             if (cmd.equalsIgnoreCase("delete")) {
                 int index = Integer.parseInt(action[1]);
-                String taskRemoved = taskList.getTask(index).toString();
-                taskList.removeTask(index);
-
-                response.append("- Noted. I've removed this task:\n");
-                response.append(taskRemoved).append("\nNow you have ").append(taskList.getSize())
-                        .append(" tasks in the list.");
-                return response.toString();
+                return taskList.getFormattedRemoveResponse(index);
             }
 
             if (cmd.equalsIgnoreCase("deadline")) {
@@ -155,13 +105,8 @@ public class Shadow {
                 }
 
                 TimeHandler timeHandler = new TimeHandler(action[timeIndex], action[timeIndex + 1]);
-                Deadline deadline = new Deadline(taskName.toString().trim(), timeHandler.taskDate(),
-                        timeHandler.taskTime());
-                taskList.addTask(deadline);
-
-                response.append("- Added: " + deadline.toString() + "\n");
-                response.append("- Now you have " + taskList.getSize() + " tasks in the list.");
-                return response.toString();
+                return taskList.addDeadlineAndGetResponse(taskName.toString().trim(), 
+                        timeHandler.taskDate(), timeHandler.taskTime());
             }
 
             if (cmd.equalsIgnoreCase("event")) {
@@ -190,16 +135,12 @@ public class Shadow {
                     }
                 }
 
-                TimeHandler startTine = new TimeHandler(action[startIndex], action[startIndex + 1]);
+                TimeHandler startTime = new TimeHandler(action[startIndex], action[startIndex + 1]);
                 TimeHandler endTime = new TimeHandler(action[endIndex], action[endIndex + 1]);
 
-                Event event = new Event(taskName.toString().trim(), startTine.taskDate(), startTine.taskTime(),
+                return taskList.addEventAndGetResponse(taskName.toString().trim(), 
+                        startTime.taskDate(), startTime.taskTime(),
                         endTime.taskDate(), endTime.taskTime());
-                taskList.addTask(event);
-
-                response.append("- Added: " + event.toString() + "\n");
-                response.append("- Now you have " + taskList.getSize() + " tasks in the list.");
-                return response.toString();
             }
 
             if (cmd.equalsIgnoreCase("todo")) {
@@ -211,12 +152,7 @@ public class Shadow {
                     taskName.append(" ");
                 }
 
-                ToDo toDo = new ToDo(taskName.toString().trim());
-                taskList.addTask(toDo);
-
-                response.append("- Added: " + toDo.toString() + "\n");
-                response.append("- Now you have " + taskList.getSize() + " tasks in the list.");
-                return response.toString();
+                return taskList.addTodoAndGetResponse(taskName.toString().trim());
             }
 
             if (cmd.equalsIgnoreCase("bye")) {
@@ -237,29 +173,26 @@ public class Shadow {
     }
 
     /**
-     * Checks whether the command entered by user
-     * is among the list of valid commands.
-     * Informs the user of invalid command.
+     * Validates whether the command is recognized.
      *
-     * @param command Action the user would like shadow.Shadow to perform.
-     * @throws InvalidCommandException
+     * @param command The command string to validate.
+     * @throws InvalidCommandException if command is not valid.
      */
     public static void validateCommand(String command) throws InvalidCommandException {
+        String[] validCommands = {"todo", "deadline", "event", "list", "delete", "mark", "unmark", "find", "bye"};
         for (String cmd : validCommands) {
             if (command.equalsIgnoreCase(cmd)) {
-                return ;
+                return;
             }
         }
-
         throw new InvalidCommandException("- Well that's strange. You sure I should be able to do that?");
     }
 
     /**
-     * Checks whether a description for the task is given
-     * by checking the length of the input.
+     * Validates that a task description is provided.
      *
-     * @param userInput String array of the user's input.
-     * @throws InvalidTaskDescriptionException
+     * @param userInput The parsed user input array.
+     * @throws InvalidTaskDescriptionException if no description is provided.
      */
     public static void validateTaskDescription(String[] userInput) throws InvalidTaskDescriptionException {
         if (userInput.length < 2) {
