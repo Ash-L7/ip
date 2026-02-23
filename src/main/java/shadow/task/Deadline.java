@@ -6,20 +6,21 @@ import java.time.LocalTime;
 import shadow.TimeHandler;
 
 /**
- * Deadline is a subclass of Task with a [D] marker.
- * It represents task with a due date.
+ * Represents a task with a deadline (due date and time).
+ * Extends the Task class with deadline-specific functionality.
  */
-public class Deadline extends Task{
-    /** Due day of the task */
+public class Deadline extends Task {
+    /**
+     * The due date and time for this deadline.
+     */
     private final TimeHandler deadline;
 
     /**
-     * The constructor for Deadline Task object.
-     * Takes in the description and the due day of the task.
+     * Constructs a Deadline task with the given description and due date/time.
      *
-     * @param name Description of the task being created.
-     * @param deadlineDate
-     * @param deadlineTime
+     * @param name         The description of the task.
+     * @param deadlineDate The due date for the deadline.
+     * @param deadlineTime The due time for the deadline.
      */
     public Deadline(String name, LocalDate deadlineDate, LocalTime deadlineTime) {
         super(name);
@@ -28,7 +29,7 @@ public class Deadline extends Task{
 
     @Override
     public String toFileFormat() {
-        return "D," + getIsDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
+        return "D," + isDone() + "," + this.name + "," + this.deadline.taskDate() + "," + this.deadline.taskTime();
     }
 
     @Override

@@ -1,20 +1,20 @@
 package shadow.task;
 
 /**
- * The representation of a task,
- * Records the description and completion status of the task.
+ * Represents an abstract task with a description and completion status.
+ * Subclasses should implement task-specific formatting for file storage.
  */
 public abstract class Task {
     /** The description of the task. */
-    final String name;
-    /** Keeps track of whether task has been completed. */
+    protected final String name;
+    /** Tracks whether the task has been completed. */
     private boolean isDone;
 
     /**
-     * The constructor for Task object.
-     * Initializes isDone and marks task as incomplete by default.
+     * Constructs a Task with the given description.
+     * The task is initialized as incomplete.
      *
-     * @param name Description of the task being created.
+     * @param name The description of the task.
      */
     public Task(String name) {
         assert name != null : "Task name cannot be null";
@@ -24,9 +24,9 @@ public abstract class Task {
     }
 
     /**
-     * Checks isDone field and returns whether the task is completed.
+     * Returns a string representation of the task's completion status.
      *
-     * @return A String representation of whether a task is completed.
+     * @return "X" if task is done, " " (space) if not done.
      */
     public String getIsDone() {
         assert this.isDone == true || this.isDone == false : "isDone must be a valid boolean value";
@@ -38,11 +38,11 @@ public abstract class Task {
     }
 
     /**
-     * Marks a task as complete or incomplete base on user input.
-     * Displays a string representation of the task being marked
-     * and a string prompt to tell user whether the task is being marked as complete or incomplete.
+     * Sets the completion status of the task.
+     * Note: This method only updates the status without producing output.
+     * Output formatting should be handled by the caller.
      *
-     * @param status Marks task as complete or incomplete.
+     * @param status true to mark task as done, false to mark as not done.
      */
     public void setDone(boolean status) {
         if (status) {
@@ -59,14 +59,15 @@ public abstract class Task {
     }
 
     /**
-     * Converts task into a string suitable for storing in a .csv file
+     * Converts the task to a string representation for file storage.
+     * Subclasses must implement this method.
      *
-     * @return A string representing the way the task should be recorded in the save file.
+     * @return A string representing how the task should be recorded in the save file.
      */
     public abstract String toFileFormat();
 
     @Override
     public String toString() {
-        return "[" + getIsDone() + "] " + this.name;
+        return "[" + isDone() + "] " + this.name;
     }
 }
