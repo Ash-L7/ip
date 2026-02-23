@@ -5,31 +5,36 @@ import java.util.ArrayList;
 import shadow.ui.Ui;
 
 /**
- * The shadow.task.TaskList class maintains a collection of shadow.task.Task objects using an ArrayList.
+ * Manages a collection of Task objects.
+ * Provides methods for adding, removing, and searching tasks.
  */
 public class TaskList {
-    /** List recording all the task added by user */
+    /** List recording all the tasks added by the user. */
     private final ArrayList<Task> taskLists;
-    /** Number of tasks in the list */
+    /** Number of tasks currently in the list. */
     private int numberOfTasks;
 
     /**
-     * The constructor for a shadow.task.TaskList. It initializes the task list.
+     * Constructs an empty TaskList.
      */
     public TaskList() {
         this.taskLists = new ArrayList<>();
         this.numberOfTasks = 0;
     }
 
+    /**
+     * Returns the number of tasks in the list.
+     *
+     * @return The number of tasks.
+     */
     public int getSize() {
         return this.numberOfTasks;
     }
 
     /**
-     * Adds task to the list of tasks.
-     * Prints out the task description of the task added and the total number of task currently in the list.
+     * Adds a task to the list.
      *
-     * @param task shadow.task.Task object to be added to the list.
+     * @param task The Task object to add.
      */
     public void addTask(Task task) {
         this.taskLists.add(task);
@@ -37,7 +42,7 @@ public class TaskList {
     }
 
     /**
-     * Displays all the task and their completion status currently in the list.
+     * Displays all tasks and their completion status currently in the list.
      */
     public void outputTaskList() {
         for (int i = 1; i <= numberOfTasks; i++) {
@@ -46,49 +51,166 @@ public class TaskList {
     }
 
     /**
-     * Removes the task in the specified position from the task list.
+     * Returns a formatted string of all tasks in the list.
      *
-     * @param index Position of the task in the list
+     * @return Formatted string of all tasks, or message if list is empty.
      */
-    public void removeTask(int index) {
+    public String getFormattedTaskList() {
+        if (numberOfTasks == 0) {
+            return "- No tasks in the list.";
+        }
+
+        StringBuilder response = new StringBuilder();
+        for (int i = 1; i <= numberOfTasks; i++) {
+            response.append(i + ". " + taskLists.get(i - 1).toString());
+            if (i < numberOfTasks) {
+                response.append("\n");
+            }
+        }
+        return response.toString();
+    }
+
+    /**
+     * Removes the task at the specified position from the task list.
+     *
+     * @param index Position of the task in the list (1-based).
+     * @return The String representation of the removed task.
+     */
+    public String removeTask(int index) {
         String taskRemoved = taskLists.get(index - 1).toString();
         taskLists.remove(index - 1);
         numberOfTasks--;
+        return taskRemoved;
+    }
 
-        System.out.println("- Noted. I've removed this task:\n" + taskRemoved + "\nNow you have " + numberOfTasks +
-                " tasks in the list.");
+    /**
+     * Removes a task and returns a formatted response message.
+     *
+     * @param index Position of the task in the list (1-based).
+     * @return Formatted message confirming task removal.
+     */
+    public String getFormattedRemoveResponse(int index) {
+        String taskRemoved = removeTask(index);
+        StringBuilder response = new StringBuilder("- Noted. I've removed this task:\n");
+        response.append(taskRemoved).append("\nNow you have ").append(numberOfTasks)
+                .append(" tasks in the list.");
+        return response.toString();
+    }
+
+    /**
+     * Marks a task as done or not done and returns a formatted response.
+     *
+     * @param index Position of the task in the list (1-based).
+     * @param isDone true to mark as done, false to mark as not done.
+     * @return Formatted message confirming the task status change.
+     */
+    public String getFormattedMarkResponse(int index, boolean isDone) {
+        Task task = getTask(index);
+        task.setDone(isDone);
+
+        StringBuilder response = new StringBuilder();
+        if (isDone) {
+            response.append("- Nice! I've marked this task as done:\n");
+        } else {
+            response.append("- OK, I've marked this task as not done yet:\n");
+        }
+        response.append(task.toString());
+        return response.toString();
     }
 
     /**
      * Returns the task at the specified position in the list.
      *
-     * @param index Position of the task in the list.
-     * @return shadow.task.Task object at the specified position in the list.
+     * @param index Position of the task in the list (1-based).
+     * @return The Task object at the specified position.
      */
     public Task getTask(int index) {
         return this.taskLists.get(index - 1);
     }
 
-    public void findTask(String taskDescription, Ui ui) {
-        boolean hasMatch = false;
+    /**
+     * Returns a formatted message confirming task addition.
+     *
+     * @param task The task that was added.
+     * @return Formatted message with task details and total task count.
+     */
+    public String getFormattedAddResponse(Task task) {
+        StringBuilder response = new StringBuilder("- Added: " + task.toString() + "\n");
+        response.append("- Now you have " + numberOfTasks + " tasks in the list.");
+        return response.toString();
+    }
+
+    /**
+     * Adds a deadline task and returns a formatted response.
+     *
+     * @param taskName The name of the deadline task.
+     * @param taskDate The due date of the deadline.
+     * @param taskTime The due time of the deadline.
+     * @return Formatted message confirming task addition.
+     */
+    public String addDeadlineAndGetResponse(String taskName, java.time.LocalDate taskDate, 
+                                             java.time.LocalTime taskTime) {
+        Deadline deadline = new Deadline(taskName, taskDate, taskTime);
+        addTask(deadline);
+        return getFormattedAddResponse(deadline);
+    }
+
+    /**
+     * Adds an event task and returns a formatted response.
+     *
+     * @param taskName The name of the event task.
+     * @param startDate The start date of the event.
+     * @param startTime The start time of the event.
+     * @param endDate The end date of the event.
+     * @param endTime The end time of the event.
+     * @return Formatted message confirming task addition.
+     */
+    public String addEventAndGetResponse(String taskName, java.time.LocalDate startDate, 
+                                         java.time.LocalTime startTime, java.time.LocalDate endDate,
+                                         java.time.LocalTime endTime) {
+        Event event = new Event(taskName, startDate, startTime, endDate, endTime);
+        addTask(event);
+        return getFormattedAddResponse(event);
+    }
+
+    /**
+     * Adds a todo task and returns a formatted response.
+     *
+     * @param taskName The name of the todo task.
+     * @return Formatted message confirming task addition.
+     */
+    public String addTodoAndGetResponse(String taskName) {
+        ToDo todo = new ToDo(taskName);
+        addTask(todo);
+        return getFormattedAddResponse(todo);
+    }
+
+    /**
+     * Finds and returns formatted results for tasks containing the specified description.
+     *
+     * @param taskDescription The description to search for.
+     * @return Formatted string of matching tasks, or message if none found.
+     */
+    public String findTask(String taskDescription) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
 
         for (Task task : this.taskLists) {
             if (task.toString().contains(taskDescription)) {
-                hasMatch = true;
                 matchingTasks.add(task);
             }
         }
 
-        if (!hasMatch) {
-            ui.showSearchFail();
+        if (matchingTasks.isEmpty()) {
+            return "- No matching tasks found";
         } else {
-            ui.showSearchSuccessful();
-
+            StringBuilder response = new StringBuilder("- Here are the matching tasks in your list:\n");
             for (int j = 0; j < matchingTasks.size(); j++) {
-                System.out.print((j + 1) + ". ");
-                ui.showTask(matchingTasks.get(j));
+                response.append((j + 1) + ". " + matchingTasks.get(j).toString());
+                if (j < matchingTasks.size() - 1) {
+                    response.append("\n");
+                }
             }
+            return response.toString();
         }
     }
 }

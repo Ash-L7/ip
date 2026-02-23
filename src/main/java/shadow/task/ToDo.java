@@ -1,17 +1,14 @@
 package shadow.task;
 
 /**
- * shadow.task.ToDo is a subclass of shadow.task.Task with a [T] marker.
- * It represents the most basic kind of task
- * with no additional date or time fields
- * and only records the description of the task
+ * Represents a basic task without any time constraints.
+ * Extends the Task class with minimal functionality.
  */
 public class ToDo extends Task {
     /**
-     * The constructor for shadow.task.ToDo shadow.task.Task object.
-     * Initializes isDone and marks task as incomplete by default.
+     * Constructs a ToDo task with the given description.
      *
-     * @param name Description of the task being created.
+     * @param name The description of the task.
      */
     public ToDo(String name) {
         super(name);
@@ -19,7 +16,7 @@ public class ToDo extends Task {
 
     @Override
     public String toFileFormat() {
-        return "T," + getIsDone() + "," + this.name;
+        return "T," + isDone() + "," + this.name;
     }
 
     @Override
