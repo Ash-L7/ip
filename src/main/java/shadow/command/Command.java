@@ -1,7 +1,7 @@
 package shadow.command;
 
 import shadow.ui.Ui;
-import shadow.TaskList;
+import shadow.task.TaskList;
 
 public abstract class Command {
     /**

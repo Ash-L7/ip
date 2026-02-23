@@ -1,6 +1,6 @@
 package shadow.command;
 
-import shadow.TaskList;
+import shadow.task.TaskList;
 import shadow.ui.Ui;
 
 public class FindCommand extends Command {

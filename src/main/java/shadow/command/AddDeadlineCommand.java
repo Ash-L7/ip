@@ -1,6 +1,6 @@
 package shadow.command;
 
-import shadow.TaskList;
+import shadow.task.TaskList;
 import shadow.task.Deadline;
 import shadow.TimeHandler;
 import shadow.ui.Ui;

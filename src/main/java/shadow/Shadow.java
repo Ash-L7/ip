@@ -11,6 +11,7 @@ import shadow.command.AddEventCommand;
 import shadow.command.AddToDoCommand;
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
+import shadow.task.TaskList;
 import shadow.ui.Ui;
 
 
