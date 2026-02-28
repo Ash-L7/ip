@@ -183,7 +183,7 @@ public class Shadow {
                 return "- Bye. Hope to see you again soon!";
             }
             default:
-                break; // fall through to return at end
+                break;
             }
 
         } catch (InvalidCommandException e) {
