@@ -196,6 +196,12 @@ public class Shadow {
         } catch (DateTimeParseException e) {
             return "- Oops! Please ensure dates are in d/M/yyyy (e.g., 26/2/2025) or yyyy-MM-dd and times are in " +
                     "HHmm (e.g., 1430) or HH:mm.";
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            return "- Hmm, that command looks like it's in the wrong format. Possible commands:\n"
+                    + "todo <description>\n"
+                    + "deadline <description> /by <date> <time>\n"
+                    + "event <description> /from <startDate> <startTime> /to <endDate> <endTime>\n"
+                    + "list | sort | delete <index> | mark <index> | unmark <index> | find <keyword> | bye";
         } catch (Exception e) {
             assert e.getMessage() != null : "Exception should have a message";
             return "- Oops! Something went wrong: " + e.getMessage();
@@ -217,7 +223,21 @@ public class Shadow {
                 return;
             }
         }
-        throw new InvalidCommandException("- Well that's strange. You sure I should be able to do that?");
+
+        StringBuilder help = new StringBuilder();
+        help.append("- Unknown command. Possible commands:");
+        help.append("\n- todo <description>");
+        help.append("\n- deadline <description> /by <date> <time>  (date: d/M/yyyy or yyyy-MM-dd, time: HHmm or HH:mm)");
+        help.append("\n- event <description> /from <startDate> <startTime> /to <endDate> <endTime>");
+        help.append("\n- list");
+        help.append("\n- sort");
+        help.append("\n- delete <index>");
+        help.append("\n- mark <index>");
+        help.append("\n- unmark <index>");
+        help.append("\n- find <keyword>");
+        help.append("\n- bye");
+
+        throw new InvalidCommandException(help.toString());
     }
 
     /**
