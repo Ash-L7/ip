@@ -2,6 +2,7 @@ package shadow;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.time.format.DateTimeParseException;
 
 import shadow.exception.InvalidCommandException;
 import shadow.exception.InvalidTaskDescriptionException;
@@ -192,6 +193,9 @@ public class Shadow {
         } catch (InvalidTaskDescriptionException e) {
             assert e.getMessage() != null : "Exception message should not be null";
             return e.getMessage();
+        } catch (DateTimeParseException e) {
+            return "- Oops! Please ensure dates are in d/M/yyyy (e.g., 26/2/2025) or yyyy-MM-dd and times are in " +
+                    "HHmm (e.g., 1430) or HH:mm.";
         } catch (Exception e) {
             assert e.getMessage() != null : "Exception should have a message";
             return "- Oops! Something went wrong: " + e.getMessage();
