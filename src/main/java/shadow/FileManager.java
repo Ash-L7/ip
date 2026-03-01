@@ -67,36 +67,71 @@ public class FileManager {
      *
      * @param taskList The task list that will be accessed and used to record tasks.
      */
+    // GitHub Copilot used: to enhance file reading
     public void readFile(TaskList taskList) {
         try (Scanner s = new Scanner(dataFile)) {
             while (s.hasNext()) {
                 String line = s.nextLine();
+                if (line == null) {
+                    continue;
+                }
+                line = line.trim();
+                if (line.isEmpty()) {
+                    // skip blank lines in the save file
+                    continue;
+                }
+
                 String[] parts = line.split(",");
+
+                // Basic validation: at least 3 columns (type, done marker, description)
+                if (parts.length < 3) {
+                    System.err.println("Skipping malformed save line (too few columns): " + line);
+                    continue;
+                }
+
                 String type = parts[0].trim();
                 boolean isDone = parts[1].trim().equals("X");
                 String desc = parts[2].trim();
 
-                Task task = null;
+                try {
+                    Task task = null;
 
-                switch (type) {
-                    case "T":
-                        task = new ToDo(desc);
-                        break;
-                    case "D":
-                        TimeHandler timeHandler = new TimeHandler(parts[3].trim(), parts[4].trim());
-                        task = new Deadline(desc, timeHandler.taskDate(), timeHandler.taskTime());
-                        break;
-                    case "E":
-                        TimeHandler startTime = new TimeHandler(parts[3].trim(), parts[4].trim());
-                        TimeHandler endTime = new TimeHandler(parts[5].trim(), parts[6].trim());
-                        task = new Event(desc, startTime.taskDate(), startTime.taskTime(),
-                                endTime.taskDate(), endTime.taskTime());
-                        break;
-                }
+                    switch (type) {
+                        case "T":
+                            task = new ToDo(desc);
+                            break;
+                        case "D":
+                            // Deadline expects two more columns (date, time)
+                            if (parts.length < 5) {
+                                System.err.println("Skipping malformed Deadline line (missing date/time): " + line);
+                                continue;
+                            }
+                            TimeHandler timeHandler = new TimeHandler(parts[3].trim(), parts[4].trim());
+                            task = new Deadline(desc, timeHandler.taskDate(), timeHandler.taskTime());
+                            break;
+                        case "E":
+                            // Event expects four more columns (start date, start time, end date, end time)
+                            if (parts.length < 7) {
+                                System.err.println("Skipping malformed Event line (missing start/end date/time): " + line);
+                                continue;
+                            }
+                            TimeHandler startTime = new TimeHandler(parts[3].trim(), parts[4].trim());
+                            TimeHandler endTime = new TimeHandler(parts[5].trim(), parts[6].trim());
+                            task = new Event(desc, startTime.taskDate(), startTime.taskTime(),
+                                    endTime.taskDate(), endTime.taskTime());
+                            break;
+                        default:
+                            System.err.println("Skipping unknown task type in save file: " + line);
+                            continue;
+                    }
 
-                if (task != null) {
-                    taskList.addTask(task);
-                    task.setDone(isDone);
+                    if (task != null) {
+                        taskList.addTask(task);
+                        task.setDone(isDone);
+                    }
+                } catch (Exception e) {
+                    // Catch parsing exceptions (e.g., date/time parsing) and continue
+                    System.err.println("Skipping save line due to parse error: " + line + " -> " + e.getMessage());
                 }
             }
         } catch (FileNotFoundException e) {
